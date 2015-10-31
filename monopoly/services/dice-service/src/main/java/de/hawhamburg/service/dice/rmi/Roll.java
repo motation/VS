@@ -1,4 +1,4 @@
-package de.hawhamburg.core.rmi.entity;
+package de.hawhamburg.service.dice.rmi;
 
 import java.io.Serializable;
 

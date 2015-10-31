@@ -1,6 +1,6 @@
-package de.hawhamburg.core.rmi.interfaces;
+package de.hawhamburg.service.dice.rmi;
 
-import de.hawhamburg.core.rmi.entity.Roll;
+import de.hawhamburg.service.dice.rmi.Roll;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

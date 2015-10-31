@@ -35,7 +35,7 @@ jar {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 group = 'vspai'
-mainClassName = 'de.hawhamburg.core.MonopolyApplication'
+mainClassName = 'de.hawhamburg.service.dice.DiceServiceApplication'
 
 repositories {
     mavenLocal()
@@ -55,7 +55,7 @@ configurations {
  * Configure project internal as well as external dependencies
  */
 dependencies {
-    // TODO: Added ver no on the three core starter deps to make the maven plugin to work
+    // TODO: Added ver no on the three service starter deps to make the maven plugin to work
 
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
