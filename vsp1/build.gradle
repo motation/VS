@@ -1,0 +1,69 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+/**
+ * Load several plugins, consult the gradle documentation for more info
+ */
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+
+
+/**
+ * Define the name and version of the resulting jar file
+ */
+jar {
+    baseName = 'vsp1'
+    version = '0.0.1-SNAPSHOT'
+}
+
+/**
+ * Define source and target java version compatibility
+ */
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+group = 'vspai'
+mainClassName = 'de.hawhamburg.core.MonopolyApplication'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        // Can't find spring-cloud-build in maven central...
+        url 'http://maven.springframework.org/release'
+    }
+}
+
+//exclude tomcat
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+}
+
+/**
+ * Configure project internal as well as external dependencies
+ */
+dependencies {
+    // TODO: Added ver no on the three core starter deps to make the maven plugin to work
+
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+    compile('javax.ws.rs:javax.ws.rs-api:2.0-m01')
+    compile('org.apache.jackrabbit:jackrabbit-jcr-rmi:2.1.0')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}
