@@ -12,46 +12,51 @@ version: v1
 #  - secured: !include http://remote-host/secured.yml
 
 
-/{gameId}:
-  /create:
-    post:
-      desciption: Creates a player for the given Game
+player/{gameId}:
+  queryParameters:
+    gameId:
+      description: Id for the regarding game
+  post:
+    desciption: Creates a player for the given Game
+    responses:
+      201:
+        body:
+          application/json:
+            schema: player
+            example: |
+              { "name": "Marcus",
+                "uri": "Foo",
+                "place": 1,
+                "position": 1,
+                "ready": true }
+      409:
+        body:
+          application/json:
+            schema: null
+            example: |
+              { null }
+
+  /{playerId}:
+    queryParameters:
+      playderId:
+        description: Id for the regarding player
+    get:
       responses:
-        201:
+        200:
           body:
             application/json:
               schema: player
               example: |
-                { playerId: 1,
-                  gameId: 1,
-                  money: 5000}
-        409:
-
-  /{playerId}:
-    /money:
-      is: [ paged, secured ]
-      get:
-        queryParameters:
-          genre:
-            description: filter the songs by genre
-      post:
-      /{songId}:
-        get:
-          responses:
-            200:
-              body:
-                application/json:
-                  schema: |
-                    { "$schema": "http://json-schema.org/schema",
-                      "type": "object",
-                      "description": "A canonical song",
-                      "properties": {
-                        "title":  { "type": "string" },
-                        "artist": { "type": "string" }
-                      },
-                      "required": [ "title", "artist" ]
-                    }
-                application/xml:
-        delete:
-          description: |
-            This method will *delete* an **individual song**
+                { "name": "Marcus",
+                  "uri": "Foo",
+                  "place": 1,
+                  "position": 1,
+                  "ready": true }
+        404:
+          body
+            application/json:
+              schema: null
+              example: |
+                { null }
+    put:
+      #TODO
