@@ -4,14 +4,23 @@ import de.hawhamburg.service.dice.rmi.DiceRMI;
 import de.hawhamburg.service.dice.rmi.Roll;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Random;
 
 /**
  * Created by Ole on 04.11.2015.
  */
 @Service
-public class DiceService implements DiceRMI {
+public class DiceService extends UnicastRemoteObject implements DiceRMI{
+
+
+    private static final long serialVersionUID = -8925883553974534423L;
+
+    public DiceService() throws RemoteException {
+    }
+
     @Override
     public Roll roll() throws RemoteException {
         return new Roll(createRandomNumber());
