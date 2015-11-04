@@ -1,0 +1,27 @@
+/decks/{gameid}:
+ /chance:
+ get:
+ description: Gets a chance card
+ responses:
+ 200:
+ body:
+ application/json:
+ schema: card
+ example: |
+ { "name": "Go to Jail",
+"text": "Go to jail, do not
+travel across 'go' and don't
+receive $200 " }
+ /community:
+ get:
+ description: Gets a community card
+ responses:
+ 200:
+ body:
+ application/json:
+ schema: card
+ example: |
+ { "name": "Go to Jail",
+"text": "Go to jail, do not
+travel across 'go' and don't
+receive $200 " }

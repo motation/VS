@@ -2,6 +2,8 @@ package de.hawhamburg.service.dice.controller;
 
 import de.hawhamburg.service.dice.rmi.DiceRMI;
 import de.hawhamburg.service.dice.rmi.Roll;
+import de.hawhamburg.service.dice.service.DiceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,16 +21,13 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 @RestController
-public class DiceController implements DiceRMI {
+public class DiceController {
 
-    @Override
+    @Autowired
+    private DiceService diceService;
+
     @RequestMapping(value = "/dice", method = RequestMethod.GET)
     public Roll roll() throws RemoteException {
-        return new Roll(createRandomNumber());
-    }
-
-    private int createRandomNumber(){
-        Random random = new Random();
-        return random.nextInt(6) + 1;
+        return diceService.roll();
     }
 }
