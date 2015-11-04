@@ -5,6 +5,7 @@ import de.hawhamburg.service.dice.rmi.DiceRMI;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 
 /**
@@ -15,6 +16,7 @@ public class MonopolyClient {
     public static void main(String[] args) {
         try {
             DiceRMI dice = (DiceRMI) Naming.lookup("//127.0.0.1/"+MonopolyServiceApplication.DICE_NAME);
+            System.setSecurityManager(new RMISecurityManager());
             for(int ii = 0; ii < 10; ii++) {
                 System.out.println("Number "+ dice.roll().getNumber());
             }
