@@ -23,3 +23,7 @@ build/
 *.ipr
 *.iws
 *.idea
+
+# Gradle
+gradle-wrapper.properties
+gradlew.bat
