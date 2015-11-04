@@ -18,6 +18,12 @@ player/{gameId}:
       description: Id for the regarding game
   post:
     desciption: Creates a player for the given Game
+    body:
+      application/json:
+        schema: player
+        example: |
+          { "name": "Marcus",
+            "uri": "Foo" }
     responses:
       201:
         body:
@@ -25,16 +31,19 @@ player/{gameId}:
             schema: player
             example: |
               { "name": "Marcus",
-                "uri": "Foo",
+                "uri": "127.0.0.1/player/1/1",
                 "place": 1,
                 "position": 1,
                 "ready": true }
       409:
         body:
           application/json:
-            schema: null
+            schema: Error
             example: |
-              { null }
+              { "message": "Spiel Voll" }
+#              TODO Error Entitaet anlegen.
+#              TODO Spiel nicht gefunden ggfs. anderer Code
+#              TODO Spieler bereits vorhanden ggfs. anderer Code
 
   /{playerId}:
     queryParameters:
@@ -53,13 +62,35 @@ player/{gameId}:
                   "position": 1,
                   "ready": true }
         404:
-          body
+          body:
             application/json:
-              schema: null
+              schema: Error
               example: |
-                { null }
-    put:
-      type: { item: { schema: "player", "example":"" } }
-      resoonses:
+                { "message":"Spieler nicht gefunden" }
+    patch:
+      description: Updates the given player
+      body:
+        application/json:
+          schema: player
+          example: |
+            { "name": "Marcus",
+              "uri": "Foo",
+              "place": 1,
+              "position": 1 }
+      responses:
         200:
           body:
+            application/json:
+              schema: player
+              example: |
+                { "name": "Marcus",
+                  "uri": "Foo",
+                  "place": 1,
+                  "position": 1,
+                  "ready": true }
+        404:
+          body:
+            application/json:
+              schema: Error
+              example: |
+                { "message":"Spieler nicht gefunden" }
