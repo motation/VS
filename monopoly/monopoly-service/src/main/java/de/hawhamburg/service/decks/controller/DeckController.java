@@ -1,7 +1,6 @@
 package de.hawhamburg.service.decks.controller;
 
 import de.hawhamburg.service.decks.rmi.Card;
-import de.hawhamburg.service.decks.rmi.DeckRMI;
 import de.hawhamburg.service.decks.service.DeckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-
 import java.rmi.RemoteException;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;

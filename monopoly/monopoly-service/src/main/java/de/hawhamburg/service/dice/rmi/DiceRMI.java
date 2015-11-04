@@ -1,7 +1,5 @@
 package de.hawhamburg.service.dice.rmi;
 
-import de.hawhamburg.service.dice.rmi.Roll;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

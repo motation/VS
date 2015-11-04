@@ -1,6 +1,5 @@
 package de.hawhamburg.service.dice.controller;
 
-import de.hawhamburg.service.dice.rmi.DiceRMI;
 import de.hawhamburg.service.dice.rmi.Roll;
 import de.hawhamburg.service.dice.service.DiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.rmi.RemoteException;
-import java.util.Random;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
