@@ -120,7 +120,7 @@ task createDockerfile(type: Dockerfile, dependsOn: [copyDist]) {
     from 'java:8'
     maintainer 'Sven-Ole Fedders "sven-ole.fedders@haw-hamburg.de"'
     environmentVariable('JAVA_OPTS', '-Dspring.profiles.active=docker')
-    exposePort(8080)
+    exposePort(4567)
     entryPoint("/monopoly-service/bin/monopoly-service")
     addFile({
         jar.baseName + '.tar'
