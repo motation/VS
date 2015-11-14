@@ -1,0 +1,96 @@
+#%RAML 0.8
+
+title: Player Service for RESTopoly
+baseUri: http://example.api.com/player
+version: v1
+#traits:
+#  - paged:
+#      queryParameters:
+#        pages:
+#          description: The number of pages to return
+#          type: number
+#  - secured: !include http://remote-host/secured.yml
+
+
+player/{gameId}:
+  queryParameters:
+    gameId:
+      description: Id for the regarding game
+  post:
+    desciption: Creates a player for the given Game
+    body:
+      application/json:
+        schema: player
+        example: |
+          { "name": "Marcus",
+            "uri": "Foo" }
+    responses:
+      201:
+        body:
+          application/json:
+            schema: player
+            example: |
+              { "name": "Marcus",
+                "uri": "127.0.0.1/player/1/1",
+                "place": 1,
+                "position": 1,
+                "ready": true }
+      409:
+        body:
+          application/json:
+            schema: Error
+            example: |
+              { "message": "Spiel Voll" }
+#              TODO Error Entitaet anlegen.
+#              TODO Spiel nicht gefunden ggfs. anderer Code
+#              TODO Spieler bereits vorhanden ggfs. anderer Code
+
+  /{playerId}:
+    queryParameters:
+      playderId:
+        description: Id for the regarding player
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: player
+              example: |
+                { "name": "Marcus",
+                  "uri": "Foo",
+                  "place": 1,
+                  "position": 1,
+                  "ready": true }
+        404:
+          body:
+            application/json:
+              schema: Error
+              example: |
+                { "message":"Spieler nicht gefunden" }
+    patch:
+      description: Updates the given player
+      body:
+        application/json:
+          schema: player
+          example: |
+            { "name": "Marcus",
+              "uri": "Foo",
+              "place": 1,
+              "position": 1 }
+      responses:
+        200:
+          body:
+            application/json:
+              schema: player
+              example: |
+                { "name": "Marcus",
+                  "uri": "Foo",
+                  "place": 1,
+                  "position": 1,
+                  "ready": true }
+        404:
+          body:
+            application/json:
+              schema: Error
+              example: |
+                { "message":"Spieler nicht gefunden" }

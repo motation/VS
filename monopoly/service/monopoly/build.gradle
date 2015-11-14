@@ -1,0 +1,36 @@
+/**
+ * Load several plugins, consult the gradle documentation for more info
+ */
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        // Can't find spring-cloud-build in maven central...
+        url 'http://maven.springframework.org/release'
+    }
+}
+
+/**
+ * Configure project internal as well as external dependencies
+ */
+dependencies {
+    compile(project(":decks-service")) {
+        transitive = false;
+    }
+
+    compile(project(":player-service")) {
+        transitive = false;
+    }
+
+    compile(project(":dice-service")) {
+        transitive = false;
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}

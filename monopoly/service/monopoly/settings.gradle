@@ -1,0 +1,14 @@
+rootProject
+
+
+/*
+Include Monopoly Services
+ */
+include ":decks-service"
+project(":decks-service").projectDir = file("../decks")
+
+include ":player-service"
+project(":player-service").projectDir = file("../player")
+
+include ":dice-service"
+project(":dice-service").projectDir = file("../dice")

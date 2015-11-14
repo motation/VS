@@ -1,0 +1,6 @@
+server:
+  port: 4567
+
+info:
+  component: Player Service
+
