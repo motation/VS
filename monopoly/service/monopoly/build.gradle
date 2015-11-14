@@ -4,7 +4,6 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -13,7 +12,6 @@ repositories {
         url 'http://maven.springframework.org/release'
     }
 }
-
 /**
  * Configure project internal as well as external dependencies
  */
@@ -30,7 +28,6 @@ dependencies {
         transitive = false;
     }
 }
-
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
 }
