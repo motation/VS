@@ -4,13 +4,13 @@ package de.hawhamburg.monopoly.service.dice.model;
  * Created by Ole on 14.11.2015.
  */
 public class Roll {
-    private int diceValue;
+    private int number;
 
-    public Roll(int diceValue) {
-        this.diceValue = diceValue;
+    public Roll(int number) {
+        this.number = number;
     }
 
-    public int getDiceValue() {
-        return diceValue;
+    public int getNumber() {
+        return number;
     }
 }
