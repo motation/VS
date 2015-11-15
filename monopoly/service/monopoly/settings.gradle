@@ -12,3 +12,6 @@ project(":player-service").projectDir = file("../player")
 
 include ":dice-service"
 project(":dice-service").projectDir = file("../dice")
+
+include ":games-service"
+project(":games-service").projectDir = file("../games")

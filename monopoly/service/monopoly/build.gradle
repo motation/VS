@@ -27,6 +27,10 @@ dependencies {
     compile(project(":dice-service")) {
         transitive = false;
     }
+
+    compile(project(":games-service")) {
+        transitive = false;
+    }
 }
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
