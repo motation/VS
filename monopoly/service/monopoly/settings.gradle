@@ -18,3 +18,12 @@ project(":games-service").projectDir = file("../games")
 
 include ":jail-service"
 project(":jail-service").projectDir = file("../jail")
+
+include ":banks-service"
+project(":banks-service").projectDir = file("../banks")
+
+include ":boards-service"
+project(":boards-service").projectDir = file("../boards")
+
+include ":brokers-service"
+project(":brokers-service").projectDir = file("../brokers")

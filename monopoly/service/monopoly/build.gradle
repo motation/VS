@@ -35,6 +35,18 @@ dependencies {
     compile(project(":jail-service")) {
         transitive = false;
     }
+
+    compile(project(":banks-service")) {
+        transitive = false;
+    }
+
+    compile(project(":boards-service")) {
+        transitive = false;
+    }
+
+    compile(project(":brokers-service")) {
+        transitive = false;
+    }
 }
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
