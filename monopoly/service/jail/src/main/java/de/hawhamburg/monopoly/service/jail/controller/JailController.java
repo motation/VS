@@ -1,6 +1,6 @@
-package de.hawhamburg.monopoly.service.games.controller;
+package de.hawhamburg.monopoly.service.jail.controller;
 
-import de.hawhamburg.monopoly.service.games.service.GamesService;
+import de.hawhamburg.monopoly.service.jail.service.JailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,9 +15,9 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 @RestController
-public class GamesController {
+public class JailController {
     @Autowired
-    private GamesService gamesService;
+    private JailService jailService;
 
 
 }

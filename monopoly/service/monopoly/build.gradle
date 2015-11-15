@@ -31,6 +31,10 @@ dependencies {
     compile(project(":games-service")) {
         transitive = false;
     }
+
+    compile(project(":jail-service")) {
+        transitive = false;
+    }
 }
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
