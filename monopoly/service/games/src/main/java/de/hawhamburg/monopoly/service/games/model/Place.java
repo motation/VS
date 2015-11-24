@@ -33,7 +33,7 @@ public class Place {
             this.place.name = name;
             return this;
         }
-        
+
         public Place build(){
             return this.place;
         }
