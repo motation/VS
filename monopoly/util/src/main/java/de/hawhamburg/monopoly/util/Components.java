@@ -11,6 +11,7 @@ public class Components {
     private static final String HTTP_LOCALHOST_4567_BROKERS = "http://localhost:4567/brokers";
     private static final String HTTP_LOCALHOST_4567_DECKS = "http://localhost:4567/decks";
     private static final String HTTP_LOCALHOST_4567_EVENTS = "http://localhost:4567/events";
+    public static final String HTTP_LOCALHOST_4567_PLAYER = "http://localhost:4567/player";
 
     private String game;
     private String dice;
@@ -19,6 +20,7 @@ public class Components {
     private String broker;
     private String decks;
     private String events;
+    private String player;
 
     private Components(){
 
@@ -52,6 +54,10 @@ public class Components {
         return events;
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
     public static Components getComponents(){
         Components components = new Components();
         components.game = HTTP_LOCALHOST_4567_GAMES;
@@ -61,6 +67,7 @@ public class Components {
         components.broker = HTTP_LOCALHOST_4567_BROKERS;
         components.decks = HTTP_LOCALHOST_4567_DECKS;
         components.events = HTTP_LOCALHOST_4567_EVENTS;
+        components.player = HTTP_LOCALHOST_4567_PLAYER;
         return components;
     }
 

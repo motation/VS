@@ -34,10 +34,6 @@ public class Place {
             return this;
         }
         
-        public Place buildFromDBObject(){
-            return this.place;
-        }
-        
         public Place build(){
             return this.place;
         }

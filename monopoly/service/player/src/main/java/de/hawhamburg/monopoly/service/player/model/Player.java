@@ -1,4 +1,7 @@
 package de.hawhamburg.monopoly.service.player.model;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.games.model.Place;
 import de.hawhamburg.monopoly.util.Requester;
 
@@ -90,10 +93,10 @@ public class Player {
         }
 
         public Player buildFromResource(String resource) throws IOException {
-            this.player = new Player();
             String json = Requester.sendGetRequest(resource);
-            return this.player;
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            return gson.fromJson(json,Player.class);
         }
     }
-
 }

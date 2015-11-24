@@ -73,7 +73,7 @@ dependencies {
 
     compile('javax.ws.rs:javax.ws.rs-api:2.0-m01')
 
-    compile('de.undercouch:bson4jackson:2.5.0')
+    compile ('com.google.code.gson:gson:2.4')
 
     compile(project(":games-service")){
         transitive=false
