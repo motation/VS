@@ -57,7 +57,7 @@ public class BoardsService {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         Player p = gson.fromJson(json,Player.class);
-        //TODO Player aus response zusammenbauen.
+
         return p.getId().equals(Integer.toString(playerId));
     }
 }

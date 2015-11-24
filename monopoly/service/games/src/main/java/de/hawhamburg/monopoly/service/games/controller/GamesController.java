@@ -82,10 +82,17 @@ public class GamesController {
         //OF TODO implement
     }
 
+    /**
+     * Checks if the given Player is ready
+     * @param gameId
+     * @param playerId
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/{gameId}/players/{playerId}/ready", method = RequestMethod.GET)
     public boolean isPlayerReady(@PathVariable final int gameId, @PathVariable final String playerId, HttpServletRequest
             request, HttpServletResponse response) {
-        //OF TODO implement
         Game game = gamesService.findGame(Integer.toString(gameId));
         if(game ==null){
             response.setStatus(HttpServletResponse.SC_CONFLICT);
