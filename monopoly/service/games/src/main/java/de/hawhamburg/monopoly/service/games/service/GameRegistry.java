@@ -17,10 +17,6 @@ public class GameRegistry {
     @PostConstruct
     public void init() {
         games = new ArrayList<>();
-        games.add(Game.builder().build());
-        games.add(Game.builder().build());
-        games.add(Game.builder().build());
-        games.add(Game.builder().build());
     }
 
     public Game addGame(Game game) {

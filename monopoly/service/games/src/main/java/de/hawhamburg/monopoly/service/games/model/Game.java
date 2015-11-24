@@ -39,9 +39,23 @@ public class Game {
             this.game = new Game();
         }
 
+        public GameBuilder withGameid(String gameid){
+            this.game.gameid = gameid;
+            return this;
+        }
+
+        public GameBuilder withUri(String uri){
+            this.game.uri = uri;
+            return this;
+        }
+
+        public GameBuilder withPlayers(List<Player> players){
+            this.game.players = players;
+            return this;
+        }
+
         public Game build(){
             return this.game;
         }
-
     }
 }
