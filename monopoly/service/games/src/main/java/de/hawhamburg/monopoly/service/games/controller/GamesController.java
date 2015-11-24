@@ -66,9 +66,10 @@ public class GamesController {
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.PUT)
-    public void putPlayer(@PathVariable final int gameId, @PathVariable final int playerId, @RequestParam final
+    public void joinGame(@PathVariable final String gameId, @PathVariable final String playerId, @RequestParam final
     String name, @RequestParam final String uri, HttpServletRequest request, HttpServletResponse response) {
         //OF TODO implement
+        boolean successfulJoined=gamesService.joinGame(gameId,playerId,name,uri);
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.DELETE)

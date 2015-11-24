@@ -1,6 +1,7 @@
 package de.hawhamburg.monopoly.service.games.service;
 
 import de.hawhamburg.monopoly.service.games.model.Game;
+import de.hawhamburg.monopoly.service.player.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,10 @@ public class GamesService {
 
     public List<Game> getGames(){
         return gameRegistry.getGames();
+    }
+
+    public boolean joinGame(String gameId, String playerId, String name, String uri) {
+        //OF TODO join the game
+        return false;
     }
 }
