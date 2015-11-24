@@ -13,4 +13,8 @@ public class Roll {
     public int getNumber() {
         return number;
     }
+
+    public boolean isValid() {
+        return number >1 && number < 13;
+    }
 }
