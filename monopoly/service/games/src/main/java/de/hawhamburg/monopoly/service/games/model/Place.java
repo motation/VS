@@ -1,5 +1,9 @@
 package de.hawhamburg.monopoly.service.games.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.springframework.http.converter.json.GsonBuilderUtils;
+
 /**
  * Created by Ole on 24.11.2015.
  */
@@ -29,7 +33,7 @@ public class Place {
             this.place.name = name;
             return this;
         }
-
+        
         public Place build(){
             return this.place;
         }

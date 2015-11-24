@@ -1,7 +1,7 @@
 package de.hawhamburg.monopoly.service.player.model;
 
-import com.mongodb.DBObject;
-import com.mongodb.util.JSON;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.games.model.Place;
 import de.hawhamburg.monopoly.util.Requester;
 
@@ -93,17 +93,10 @@ public class Player {
         }
 
         public Player buildFromResource(String resource) throws IOException {
-            this.player = new Player();
             String json = Requester.sendGetRequest(resource);
-            DBObject dbObject = (DBObject) JSON.parse(json);
-            this.player.id = (String) dbObject.get("id");
-            this.player.uri = (String) dbObject.get("uri");
-            this.player.ready = (boolean) dbObject.get("ready");
-            this.player.position = (int) dbObject.get("position");
-            this.player.name = (String) dbObject.get("name");
-            this.player.place = (Place) dbObject.get("place");
-            return this.player;
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            return gson.fromJson(json,Player.class);
         }
     }
-
 }
