@@ -3,7 +3,9 @@ package de.hawhamburg.monopoly.service.games.model;
 import de.hawhamburg.monopoly.service.player.model.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ole on 15.11.2015.
@@ -12,10 +14,10 @@ public class Game {
 
     private String gameid;
     private String uri;
-    private List<Player> players;
+    private Map<String, Player> players;
 
     private Game(){
-        players = new ArrayList<>();
+        players = new HashMap<>();
     }
 
     public String getGameid() {
@@ -27,12 +29,21 @@ public class Game {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return new ArrayList<>(players.values());
     }
 
     public static GameBuilder builder(){
         return new GameBuilder();
     }
+
+    public Player getPlayer(String playerId) {
+        Player p = null;
+        if(players.containsKey(playerId)) {
+            p = players.get(playerId);
+        }
+        return p;
+    }
+
 
     public static class GameBuilder{
         private Game game;
@@ -52,7 +63,9 @@ public class Game {
         }
 
         public GameBuilder withPlayers(List<Player> players){
-            this.game.players = players;
+            for(Player player : players){
+                this.game.players.put(player.getId(), player);
+            }
             return this;
         }
 
