@@ -1,4 +1,6 @@
-package de.hawhamburg.monopoly.service.games.model;
+package de.hawhamburg.monopoly.service.games.model.wrapper;
+
+import de.hawhamburg.monopoly.service.games.model.Game;
 
 import java.util.List;
 

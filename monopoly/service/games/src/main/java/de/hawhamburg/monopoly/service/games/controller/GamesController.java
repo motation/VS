@@ -1,7 +1,7 @@
 package de.hawhamburg.monopoly.service.games.controller;
 
 import de.hawhamburg.monopoly.service.games.model.Game;
-import de.hawhamburg.monopoly.service.games.model.Games;
+import de.hawhamburg.monopoly.service.games.model.wrapper.Games;
 import de.hawhamburg.monopoly.service.games.service.GamesService;
 import de.hawhamburg.monopoly.service.player.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import java.net.URI;
 import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
