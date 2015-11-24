@@ -47,6 +47,10 @@ dependencies {
     compile(project(":brokers-service")) {
         transitive = false;
     }
+
+    compile(project(":util")) {
+        transitive = false;
+    }
 }
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'

@@ -27,3 +27,10 @@ project(":boards-service").projectDir = file("../boards")
 
 include ":brokers-service"
 project(":brokers-service").projectDir = file("../brokers")
+
+/*
+Include Util
+ */
+
+include ":util"
+project(":util").projectDir = file("../../util")
