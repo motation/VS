@@ -74,6 +74,9 @@ dependencies {
     compile(project(":dice-service")) {
         transitive = false;
     }
+    compile(project(":util")) {
+        transitive = false;
+    }
 }
 
 task wrapper(type: Wrapper) {
