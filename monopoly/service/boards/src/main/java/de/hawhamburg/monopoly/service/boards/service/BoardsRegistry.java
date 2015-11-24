@@ -1,0 +1,41 @@
+package de.hawhamburg.monopoly.service.boards.service;
+
+import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistException;
+import de.hawhamburg.monopoly.service.boards.model.Board;
+import de.hawhamburg.monopoly.service.boards.model.wrapper.Boards;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.*;
+
+/**
+ * Created by Marcus Jenz on 24.11.15.
+ *
+ * @author Marcus Jenz
+ */
+@Service
+public class BoardsRegistry {
+
+    private Map<Integer, Board> boards;
+
+    @PostConstruct
+    public void init() {
+        boards = new HashMap<>();
+    }
+
+    public Board addBoard(int gameId, Board board) {
+        if(boards.containsKey(gameId))
+            return  boards.get(gameId);
+        boards.put(gameId, board);
+        return board;
+    }
+
+    public List<Board> getBoards() {
+        return new ArrayList<>(this.boards.values());
+    }
+    public Board getBoard(int gameId) throws EntityDoesNotExistException {
+        if(!boards.containsKey(gameId))
+            throw new EntityDoesNotExistException();
+        return this.boards.get(gameId);
+    }
+}
