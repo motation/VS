@@ -25,8 +25,10 @@ public class GamesService {
         return gameRegistry.getGames();
     }
 
-    public boolean joinGame(String gameId, String playerId, String name, String uri) throws IOException {
+    public boolean
+    joinGame(String gameId, String playerId, String name, String uri) throws IOException {
         Game game = findGame(gameId);
+        if(game == null) return false;
         Player player = Player.builder().buildFromResource(uri);
         if(playerId.equals(player.getId()) && player.getName().equals(name)){
             game.getPlayers().add(player);
@@ -37,10 +39,5 @@ public class GamesService {
 
     public Game findGame(String gameId){
         return gameRegistry.findGameById(gameId);
-    }
-
-    public static void main(String[] args) throws IOException {
-        Player player = Player.builder().buildFromResource("http://localhost:456/player/123");
-        System.out.println(player.toString());
     }
 }

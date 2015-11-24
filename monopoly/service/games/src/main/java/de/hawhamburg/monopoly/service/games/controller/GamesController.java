@@ -147,5 +147,11 @@ public class GamesController {
                 .build();
         createGame(game, request, response);
     }
+    @RequestMapping(value = "/test/{gameId}", method = RequestMethod.GET)
+    public void runTest2(@PathVariable final String gameId,HttpServletRequest request, HttpServletResponse response)
+            throws
+            IOException {
+        joinGame(gameId,"123","Peter","http://localhost:456/player/123",request,response);
+    }
 
 }

@@ -2,6 +2,7 @@ package de.hawhamburg.monopoly.service.games.model;
 
 import de.hawhamburg.monopoly.service.player.model.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ public class Game {
     private List<Player> players;
 
     private Game(){
+        players = new ArrayList<>();
     }
 
     public String getGameid() {
