@@ -2,7 +2,6 @@ package de.hawhamburg.monopoly.service.boards.service;
 
 import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistException;
 import de.hawhamburg.monopoly.service.boards.model.Board;
-import de.hawhamburg.monopoly.service.boards.model.wrapper.Boards;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
