@@ -1,6 +1,7 @@
 package de.hawhamburg.monopoly.service.games.controller;
 
 import de.hawhamburg.monopoly.service.games.model.Game;
+import de.hawhamburg.monopoly.service.games.model.Place;
 import de.hawhamburg.monopoly.service.games.model.wrapper.Games;
 import de.hawhamburg.monopoly.service.games.service.GamesService;
 import de.hawhamburg.monopoly.service.player.model.Player;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -29,7 +31,7 @@ public class GamesController {
     @RequestMapping(method = RequestMethod.POST)
     public Game createGame(@RequestBody final Game game, HttpServletRequest request, HttpServletResponse response) {
         Game newGame = gamesService.createNewGame(game);
-        if(newGame == null) {
+        if (newGame == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         } else {
             response.setStatus(HttpServletResponse.SC_CREATED);
@@ -39,7 +41,7 @@ public class GamesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Games games(HttpServletRequest request, HttpServletResponse response) {
-        Games games =  new Games(gamesService.getGames());
+        Games games = new Games(gamesService.getGames());
         return games;
     }
 
@@ -113,5 +115,31 @@ public class GamesController {
         //OF TODO implement
     }
 
+    //OF TODO remove this dummy generator
+    // just for generation...
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void runTest(HttpServletRequest request, HttpServletResponse response) {
+        List<Player> players = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            Place place = Place.builder()
+                    .withName("Place " + i)
+                    .build();
+            Player player = Player.builder()
+                    .withId("" + i)
+                    .withName("John " + i)
+                    .withPlace(place)
+                    .withPosition(i)
+                    .withReady(i % 2 == 0)
+                    .withUri("http://localhost:4567/player/" + i)
+                    .build();
+            players.add(player);
+        }
+        Game game = Game.builder()
+                .withGameid("10")
+                .withPlayers(players)
+                .withUri("http://localhost:4567/games/10")
+                .build();
+        createGame(game, request, response);
+    }
 
 }

@@ -14,6 +14,10 @@ public class Place {
         return name;
     }
 
+    public static PlaceBuilder builder(){
+        return new PlaceBuilder();
+    }
+
     public static class PlaceBuilder{
         private Place place;
 
