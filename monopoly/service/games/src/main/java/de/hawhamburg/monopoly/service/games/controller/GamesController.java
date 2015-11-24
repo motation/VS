@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,9 +68,13 @@ public class GamesController {
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.PUT)
     public void joinGame(@PathVariable final String gameId, @PathVariable final String playerId, @RequestParam final
-    String name, @RequestParam final String uri, HttpServletRequest request, HttpServletResponse response) {
-        //OF TODO implement
+    String name, @RequestParam final String uri, HttpServletRequest request, HttpServletResponse response) throws IOException {
         boolean successfulJoined=gamesService.joinGame(gameId,playerId,name,uri);
+        if(successfulJoined){
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+        }
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.DELETE)
