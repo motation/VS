@@ -15,6 +15,9 @@ public class Game {
     private String gameid;
     private String uri;
     private Map<String, Player> players;
+    private int activeTurnOrder = 0;
+
+    public int getActiveTurnOrder(){return activeTurnOrder;}
 
     private Game(){
         players = new HashMap<>();
@@ -34,6 +37,10 @@ public class Game {
 
     public static GameBuilder builder(){
         return new GameBuilder();
+    }
+
+    public void setActiveTurnOrder(int activeTurnOrder) {
+        this.activeTurnOrder = activeTurnOrder;
     }
 
     public Player getPlayer(String playerId) {

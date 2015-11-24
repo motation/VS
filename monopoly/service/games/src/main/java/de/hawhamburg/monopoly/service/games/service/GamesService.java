@@ -31,6 +31,7 @@ public class GamesService {
         if(game == null) return false;
         Player player = Player.builder().buildFromResource(uri);
         if(playerId.equals(player.getId()) && player.getName().equals(name)){
+            player.setTurnOrder(game.getPlayers().size());
             game.getPlayers().add(player);
             return true;
         }
@@ -39,5 +40,34 @@ public class GamesService {
 
     public Game findGame(String gameId){
         return gameRegistry.findGameById(gameId);
+    }
+
+    public void obtainPlayerMutex(Game game){
+
+        Player tryingPlayer = findPlayerByTurnOrder(game, game.getActiveTurnOrder());
+        tryingPlayer.setReady(true);
+//        if(tryingPlayer == null) return false;
+//        int activeTurnOrder = game.getActiveTurnOrder();
+//        return activeTurnOrder == tryingPlayer.getTurnOrder();
+    }
+
+    public Player findPlayerByTurnOrder(Game game, int turnOrder){
+        List<Player> players = game.getPlayers();
+        for(Player player : players){
+            if(player.getTurnOrder()== turnOrder){
+                return player;
+
+            }
+        }
+        return null;
+    }
+
+
+    public int dropPlayerMutex(Game game) {
+        int order = game.getActiveTurnOrder();
+        Player tryingPlayer = findPlayerByTurnOrder(game, game.getActiveTurnOrder());
+        tryingPlayer.setReady(false);
+        game.setActiveTurnOrder((order+1)%game.getPlayers().size());
+        return 0;
     }
 }

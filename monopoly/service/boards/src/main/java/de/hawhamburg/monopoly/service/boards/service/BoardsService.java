@@ -1,10 +1,13 @@
 package de.hawhamburg.monopoly.service.boards.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistException;
 import de.hawhamburg.monopoly.service.boards.exception.PlayerNotReadyException;
 import de.hawhamburg.monopoly.service.boards.model.Board;
 import de.hawhamburg.monopoly.service.dice.exception.InvalidRollException;
 import de.hawhamburg.monopoly.service.dice.model.Roll;
+import de.hawhamburg.monopoly.service.player.model.Player;
 import de.hawhamburg.monopoly.util.Requester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +53,11 @@ public class BoardsService {
     }
 
     private boolean isPlayerReady(int gameId, int playerId) throws IOException {
-        String response = Requester.sendGetRequest("/games/" + gameId + "/turn");
-        return response.contains("true");
+        String json = Requester.sendGetRequest("/games/" + gameId + "/turn");
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Player p = gson.fromJson(json,Player.class);
+        //TODO Player aus response zusammenbauen.
+        return p.getId().equals(Integer.toString(playerId));
     }
 }

@@ -17,6 +17,7 @@ public class Player {
     private Place place;
     private int position;
     private boolean ready;
+    private int turnOrder;
 
     private Player(){
 
@@ -40,6 +41,14 @@ public class Player {
 
     public int getPosition() {
         return position;
+    }
+
+    public int getTurnOrder(){return turnOrder; }
+
+    public void setTurnOrder(int turnOrder){ this.turnOrder = turnOrder;}
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     public boolean isReady() {
@@ -85,6 +94,11 @@ public class Player {
 
         public PlayerBuilder withReady(boolean ready){
             this.player.ready = ready;
+            return this;
+        }
+
+        public PlayerBuilder withTurnOrder(int order){
+            this.player.turnOrder = order;
             return this;
         }
 
