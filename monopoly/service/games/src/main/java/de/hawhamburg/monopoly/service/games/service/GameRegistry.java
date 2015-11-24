@@ -26,4 +26,15 @@ public class GameRegistry {
     public List<Game> getGames() {
         return this.games;
     }
+
+    public Game findGameById(String gameId) {
+        Game searchedGame = null;
+        for (Game game : games) {
+            if (game.getGameid().equals(gameId)){
+                searchedGame = game;
+                break;
+            }
+        }
+        return searchedGame;
+    }
 }
