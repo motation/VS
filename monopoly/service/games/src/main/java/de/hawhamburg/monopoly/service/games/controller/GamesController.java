@@ -1,6 +1,7 @@
 package de.hawhamburg.monopoly.service.games.controller;
 
 import de.hawhamburg.monopoly.service.games.model.Game;
+import de.hawhamburg.monopoly.service.games.model.Games;
 import de.hawhamburg.monopoly.service.games.service.GamesService;
 import de.hawhamburg.monopoly.service.player.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,20 @@ public class GamesController {
     private GamesService gamesService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createGame(@RequestBody final Game game, HttpServletRequest request, HttpServletResponse response) {
-        //OF TODO implement
+    public Game createGame(@RequestBody final Game game, HttpServletRequest request, HttpServletResponse response) {
+        Game newGame = gamesService.createNewGame(game);
+        if(newGame == null) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+        } else {
+            response.setStatus(HttpServletResponse.SC_CREATED);
+        }
+        return game;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Game> games(HttpServletRequest request, HttpServletResponse response) {
-        //OF TODO implement
-        return null;
+    public Games games(HttpServletRequest request, HttpServletResponse response) {
+        Games games =  new Games(gamesService.getGames());
+        return games;
     }
 
     @RequestMapping(value = "/{gameId}", method = RequestMethod.GET)
