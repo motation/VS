@@ -38,4 +38,9 @@ public class GamesService {
     public Game findGame(String gameId){
         return gameRegistry.findGameById(gameId);
     }
+
+    public static void main(String[] args) throws IOException {
+        Player player = Player.builder().buildFromResource("http://localhost:456/player/123");
+        System.out.println(player.toString());
+    }
 }

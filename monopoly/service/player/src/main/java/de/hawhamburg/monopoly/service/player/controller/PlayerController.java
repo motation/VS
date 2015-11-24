@@ -1,8 +1,11 @@
 package de.hawhamburg.monopoly.service.player.controller;
 
+import de.hawhamburg.monopoly.service.player.model.Player;
 import de.hawhamburg.monopoly.service.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.Consumes;
@@ -21,5 +24,9 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
+    @RequestMapping(value="/{playerId}", method = RequestMethod.GET)
+    public Player player(@PathVariable final String playerId){
+        return playerService.getPlayer(playerId);
+    }
 
 }

@@ -70,9 +70,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
-    compile('org.mongodb:mongo-java-driver:3.1.0')
 
     compile('javax.ws.rs:javax.ws.rs-api:2.0-m01')
+
+    compile('de.undercouch:bson4jackson:2.5.0')
 
     compile(project(":games-service")){
         transitive=false
