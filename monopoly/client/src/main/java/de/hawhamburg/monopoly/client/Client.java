@@ -1,9 +1,6 @@
 package de.hawhamburg.monopoly.client;
 
-import de.hawhamburg.monopoly.service.games.model.Game;
-import de.hawhamburg.monopoly.service.games.model.Place;
-import de.hawhamburg.monopoly.service.games.model.wrapper.Games;
-import de.hawhamburg.monopoly.service.player.model.Player;
+
 import de.hawhamburg.monopoly.util.Components;
 import de.hawhamburg.monopoly.util.Requester;
 
