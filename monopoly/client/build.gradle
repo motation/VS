@@ -1,0 +1,39 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+jar {
+    baseName = 'client'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE")
+
+    compile(project(":util")) {
+        transitive = false;
+    }
+
+}
+
+
+/**
+ * Define tasks
+ */
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}
+/**
+ * Will be run on the CI Server (bamboo)
+ */
+task buildAll(dependsOn: [build]) {
+
+}

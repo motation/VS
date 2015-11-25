@@ -34,3 +34,11 @@ Include Util
 
 include ":util"
 project(":util").projectDir = file("../../util")
+
+
+/*
+Include Client
+ */
+
+include ":client"
+project(":client").projectDir = file("../../client")
