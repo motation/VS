@@ -71,15 +71,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
     compile('javax.ws.rs:javax.ws.rs-api:2.0-m01')
-    compile(project(":dice-service")) {
-        transitive = false;
-    }
-    compile(project(":util")) {
-        transitive = false;
-    }
-    compile(project(":player-service")) {
-        transitive = false;
-    }
 }
 
 task wrapper(type: Wrapper) {

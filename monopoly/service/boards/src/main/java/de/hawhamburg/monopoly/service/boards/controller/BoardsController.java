@@ -14,9 +14,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import de.hawhamburg.monopoly.service.dice.model.Roll;
+import de.hawhamburg.monopoly.service.boards.model.Roll;
 
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -24,6 +25,7 @@ import java.io.IOException;
  */
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
+@RequestMapping(value = "/boards")
 @RestController
 public class BoardsController {
     @Autowired
@@ -39,7 +41,7 @@ public class BoardsController {
      * @return
      */
     @RequestMapping(value = "/boards/{gameId}/players/{playerId}/roll", method = RequestMethod.POST)
-    public boolean postRoll(@PathVariable final int gameId, @PathVariable final int playerId, @RequestParam("roll") Roll roll
+    public boolean postRoll(@PathVariable final int gameId, @PathVariable final String playerId, @RequestBody final Roll roll
             , HttpServletRequest request, HttpServletResponse response){
 
         try {
@@ -65,7 +67,7 @@ public class BoardsController {
 
 
     @RequestMapping(value = "/games/{gameId}/players/{playerId}", method = RequestMethod.GET)
-    public int getPlayerPosition(@PathVariable final int gameId, @PathVariable final int playerId, HttpServletRequest request, HttpServletResponse response){
+    public int getPlayerPosition(@PathVariable final int gameId, @PathVariable final String playerId, HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getPlayerPosition(gameId, playerId);
         } catch (EntityDoesNotExistException e) {
@@ -75,7 +77,7 @@ public class BoardsController {
         }
     }
 
-    @RequestMapping(value="/games/{gameId}", method = RequestMethod.GET)
+    @RequestMapping(value="/boards/{gameId}", method = RequestMethod.GET)
     public Board getBoardState(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getBoard(gameId);
@@ -84,6 +86,16 @@ public class BoardsController {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return null;
         }
+    }
+
+    @RequestMapping(value="/boards/{gameId}", method = RequestMethod.DELETE)
+    public boolean deleteGame(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
+            return boardsService.deleteBoard(gameId);
+        }
+
+    @RequestMapping(value="/boards", method = RequestMethod.GET)
+    public List<Board> getBoards(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
+        return boardsService.getBoards();
     }
 
 

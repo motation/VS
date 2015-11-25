@@ -37,4 +37,8 @@ public class BoardsRegistry {
             throw new EntityDoesNotExistException();
         return this.boards.get(gameId);
     }
+
+    public Board deleteBoard(int gameId){
+        return boards.remove(gameId);
+    }
 }

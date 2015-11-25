@@ -1,6 +1,7 @@
 package de.hawhamburg.monopoly.service.boards.model;
 
 import de.hawhamburg.monopoly.service.dice.model.Roll;
+import de.hawhamburg.monopoly.service.boards.model.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,37 +13,33 @@ import java.util.Map;
  */
 public class Board {
 
-    Map<Integer, Integer> players;
+    private Map<String, Player> players;
     public final static int PRISON = 3;
 
     public Board(){
         players = new HashMap<>();
     }
 
-    public boolean addPlayer(int id){
-        return true;
-    }
-
-    public int getPosition(int playerId) {
+    public int getPosition(String playerId) {
         if(players.containsKey(playerId)){
-            return players.get(playerId);
+            return players.get(playerId).getPosition();
         }
-            players.put(playerId, 0);
-            return 0;
+        Player player = new Player(playerId);
+            players.put(playerId, player);
+            return player.getPosition();
     }
 
-    public int moveByRoll(int playerId, int roll) {
-        int prevPosition = getPosition(playerId);
-        return setPosition(playerId, prevPosition+roll);
+    public int moveByRoll(String playerId, int roll) {
+        Player player = players.get(playerId);
+        //TODO was tun wenn der Spieler nicht existiert?
+        player.setPosition(player.getPosition()+roll);
+//        int prevPosition = player.getPosition();
+        return player.getPosition();
     }
 
-    public int setPosition(int playerId, int position){
-        players.put(playerId, position);
-        return position;
-    }
-
-    public int moveToPrison(int playerId) {
-        players.put(playerId, PRISON);
+    public int moveToPrison(String playerId) {
+        Player player = players.get(playerId);
+        player.setPosition(PRISON);
         return PRISON;
     }
 }
