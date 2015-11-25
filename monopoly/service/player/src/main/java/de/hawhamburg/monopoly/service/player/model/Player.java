@@ -3,7 +3,6 @@ package de.hawhamburg.monopoly.service.player.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import de.hawhamburg.monopoly.service.games.model.Place;
 import de.hawhamburg.monopoly.util.Requester;
 
 import java.io.IOException;
