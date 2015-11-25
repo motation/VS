@@ -68,22 +68,18 @@ public class Client {
         }
     }
 
-    public void joinGame(String gameId) throws IOException{
+    public void joinGame(String gameId,String playerId,String playerName) throws IOException{
+        String uri = components.getPlayer()+"/"+playerId;
 
-//        @PathVariable final String gameId, @PathVariable final String playerId, @RequestParam final
-//        String name, @RequestParam final String uri
-
-        String playerId="";
-        String playerName="";
-        String uri="";
-
-        String resourceUrl = components.getGame();
+        String resourceUrl = components.getGame()+"/"+gameId+"/players/"+playerId;
         URL url = new URL(resourceUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoInput(true);
+        con.setDoOutput(true);
         con.setRequestMethod(PUT);
+
         con.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
-        String params = "gamedId="+gameId+"&playerId="+playerId+"&name"+playerName+"&uri="+uri;
+        String params = "name="+playerName+"&uri="+uri;
 
         OutputStream os = con.getOutputStream();
         os.write(params.getBytes("UTF-8"));
@@ -95,16 +91,13 @@ public class Client {
         while ((line = reader.readLine()) != null) {
             buffer.append(line);
         }
-
-
-
     }
 
     public void roll(){
 
     }
 
-    public void createPlayer(String id, String name) {
+    public void createPlayer(String id, String name) throws IOException{
         Place home = Place.builder()
                 .withName("Home")
                 .build();
@@ -118,5 +111,24 @@ public class Client {
                 .withTurnOrder(0)
                 .build();
 
+        String resourceUrl = components.getPlayer();
+        URL url = new URL(resourceUrl);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setDoInput(true);
+        con.setDoOutput(true);
+        con.setRequestMethod(POST);
+        con.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
+
+        OutputStream out = con.getOutputStream();
+        String jsonPlayer = Player.builder().toJson(player);
+        out.write(jsonPlayer.getBytes("UTF-8"));
+        out.flush();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String line = null;
+        StringBuffer buffer = new StringBuffer();
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line);
+        }
+        System.out.println(buffer.toString());
     }
 }

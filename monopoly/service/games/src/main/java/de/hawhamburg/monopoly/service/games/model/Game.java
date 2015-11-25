@@ -34,6 +34,7 @@ public class Game {
     }
 
     public List<Player> getPlayers() {
+        //OF TODO not possible to add new player to the list
         return new ArrayList<>(players.values());
     }
 

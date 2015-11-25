@@ -11,7 +11,7 @@ public class Components {
     private static final String HTTP_LOCALHOST_4567_BROKERS = "http://localhost:4567/brokers";
     private static final String HTTP_LOCALHOST_4567_DECKS = "http://localhost:4567/decks";
     private static final String HTTP_LOCALHOST_4567_EVENTS = "http://localhost:4567/events";
-    public static final String HTTP_LOCALHOST_4567_PLAYER = "http://localhost:4567/player";
+    public static final String HTTP_LOCALHOST_4567_PLAYER = "http://localhost:456/player";
 
     private String game;
     private String dice;

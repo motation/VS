@@ -68,9 +68,12 @@ public class GamesController {
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.PUT)
-    public void joinGame(@PathVariable final String gameId, @PathVariable final String playerId, @RequestParam final
-    String name, @RequestParam final String uri, HttpServletRequest request, HttpServletResponse response) throws
+    public void joinGame(@PathVariable final String gameId, @PathVariable final String playerId, @RequestBody final
+    String params,
+                         HttpServletRequest request, HttpServletResponse response) throws
             IOException {
+        String name = params.substring(params.indexOf("=")+1,params.indexOf("&"));
+        String uri= params.substring(params.indexOf("uri")+4);
         boolean successfulJoined = gamesService.joinGame(gameId, playerId, name, uri);
         if (successfulJoined) {
             response.setStatus(HttpServletResponse.SC_OK);
@@ -233,7 +236,7 @@ public class GamesController {
     public void runTest2(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response)
             throws
             IOException {
-        joinGame(gameId, "123", "Peter", "http://localhost:456/player/123", request, response);
+//        joinGame(gameId, "123", "Peter", "http://localhost:456/player/123", request, response);
     }
 
 }

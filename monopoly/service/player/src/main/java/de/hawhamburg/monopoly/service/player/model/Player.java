@@ -112,5 +112,11 @@ public class Player {
             Gson gson = builder.create();
             return gson.fromJson(json,Player.class);
         }
+
+        public String toJson(Player player) {
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            return (gson.toJson(player));
+        }
     }
 }

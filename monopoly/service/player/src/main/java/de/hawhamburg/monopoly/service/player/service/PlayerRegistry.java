@@ -44,6 +44,6 @@ public class PlayerRegistry {
     }
 
     public boolean createPlayer(Player player) {
-        return playerById(player.getId()) != null ? players.add(player) : false;
+        return playerById(player.getId()) == null ? players.add(player) : false;
     }
 }
