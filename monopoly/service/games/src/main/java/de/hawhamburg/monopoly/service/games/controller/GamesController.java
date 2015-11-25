@@ -2,9 +2,9 @@ package de.hawhamburg.monopoly.service.games.controller;
 
 import de.hawhamburg.monopoly.service.games.model.Game;
 import de.hawhamburg.monopoly.service.games.model.Place;
+import de.hawhamburg.monopoly.service.games.model.Player;
 import de.hawhamburg.monopoly.service.games.model.wrapper.Games;
 import de.hawhamburg.monopoly.service.games.service.GamesService;
-import de.hawhamburg.monopoly.service.player.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,8 +72,8 @@ public class GamesController {
     String params,
                          HttpServletRequest request, HttpServletResponse response) throws
             IOException {
-        String name = params.substring(params.indexOf("=")+1,params.indexOf("&"));
-        String uri= params.substring(params.indexOf("uri")+4);
+        String name = params.substring(params.indexOf("=") + 1, params.indexOf("&"));
+        String uri = params.substring(params.indexOf("uri") + 4);
         boolean successfulJoined = gamesService.joinGame(gameId, playerId, name, uri);
         if (successfulJoined) {
             response.setStatus(HttpServletResponse.SC_OK);

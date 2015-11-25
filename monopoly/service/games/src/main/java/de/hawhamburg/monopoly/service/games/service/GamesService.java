@@ -1,7 +1,7 @@
 package de.hawhamburg.monopoly.service.games.service;
 
 import de.hawhamburg.monopoly.service.games.model.Game;
-import de.hawhamburg.monopoly.service.player.model.Player;
+import de.hawhamburg.monopoly.service.games.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,12 +43,8 @@ public class GamesService {
     }
 
     public void obtainPlayerMutex(Game game){
-
         Player tryingPlayer = findPlayerByTurnOrder(game, game.getActiveTurnOrder());
         tryingPlayer.setReady(true);
-//        if(tryingPlayer == null) return false;
-//        int activeTurnOrder = game.getActiveTurnOrder();
-//        return activeTurnOrder == tryingPlayer.getTurnOrder();
     }
 
     public Player findPlayerByTurnOrder(Game game, int turnOrder){
