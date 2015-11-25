@@ -3,11 +3,10 @@ package de.hawhamburg.monopoly.service.player.controller;
 import de.hawhamburg.monopoly.service.player.model.Player;
 import de.hawhamburg.monopoly.service.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
@@ -27,6 +26,18 @@ public class PlayerController {
     @RequestMapping(value="/{playerId}", method = RequestMethod.GET)
     public Player player(@PathVariable final String playerId){
         return playerService.getPlayer(playerId);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Player createPlayer(@RequestBody final Player player,HttpServletRequest request, HttpServletResponse
+            response){
+
+        if(playerService.createPlayer(player)){
+            response.setStatus(HttpServletResponse.SC_CREATED);
+        } else {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+        }
+        return player;
     }
 
 }

@@ -17,4 +17,8 @@ public class PlayerService {
     public Player getPlayer(String playerId) {
         return playerRegistry.playerById(playerId);
     }
+
+    public boolean createPlayer(Player player) {
+        return playerRegistry.createPlayer(player);
+    }
 }

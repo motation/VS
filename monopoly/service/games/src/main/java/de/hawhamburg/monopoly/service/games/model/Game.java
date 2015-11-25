@@ -1,5 +1,7 @@
 package de.hawhamburg.monopoly.service.games.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.player.model.Player;
 
 import java.util.ArrayList;
@@ -74,6 +76,18 @@ public class Game {
                 this.game.players.put(player.getId(), player);
             }
             return this;
+        }
+
+        public Game buildFromJson(String json){
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            return gson.fromJson(json,Game.class);
+        }
+
+        public String toJson(Game game){
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            return (gson.toJson(game));
         }
 
         public Game build(){

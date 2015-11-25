@@ -42,7 +42,9 @@ public class GamesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Games games(HttpServletRequest request, HttpServletResponse response) {
-        return new Games(gamesService.getGames());
+        return Games.builder()
+                .withGames(gamesService.getGames())
+                .build();
     }
 
     @RequestMapping(value = "/{gameId}", method = RequestMethod.GET)
@@ -67,9 +69,10 @@ public class GamesController {
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.PUT)
     public void joinGame(@PathVariable final String gameId, @PathVariable final String playerId, @RequestParam final
-    String name, @RequestParam final String uri, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        boolean successfulJoined=gamesService.joinGame(gameId,playerId,name,uri);
-        if(successfulJoined){
+    String name, @RequestParam final String uri, HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
+        boolean successfulJoined = gamesService.joinGame(gameId, playerId, name, uri);
+        if (successfulJoined) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
@@ -84,6 +87,7 @@ public class GamesController {
 
     /**
      * Checks if the given Player is ready
+     *
      * @param gameId
      * @param playerId
      * @param request
@@ -94,15 +98,17 @@ public class GamesController {
     public boolean isPlayerReady(@PathVariable final int gameId, @PathVariable final String playerId, HttpServletRequest
             request, HttpServletResponse response) {
         Game game = gamesService.findGame(Integer.toString(gameId));
-        if(game ==null){
+        if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+                    .getPathInfo());
             return false;
         }
         Player player = game.getPlayer(playerId);
-        if (player == null){
+        if (player == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Player with with PlayerId "+playerId+" in Game with  GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            System.out.println("Player with with PlayerId " + playerId + " in Game with  GameId " + gameId + " does " +
+                    "not exsist, but was requested in " + request.getPathInfo());
             return false;
         }
         return player.isReady();
@@ -110,6 +116,7 @@ public class GamesController {
 
     /**
      * End Turn
+     *
      * @param gameId
      * @param playerId
      * @param request
@@ -130,6 +137,7 @@ public class GamesController {
 
     /**
      * Return which player is active.
+     *
      * @param gameId
      * @param request
      * @param response
@@ -139,21 +147,23 @@ public class GamesController {
     public Player playersTurn(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse
             response) {
         Game game = gamesService.findGame(gameId);
-        if(game ==null){
+        if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+                    .getPathInfo());
             return null;
         }
         Player player = gamesService.findPlayerByTurnOrder(game, game.getActiveTurnOrder());
-        if (player == null){
+        if (player == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("No active Player was found. "+ request.getPathInfo());
+            System.out.println("No active Player was found. " + request.getPathInfo());
         }
         return player;
     }
 
     /**
      * Try to obtain Mutex
+     *
      * @param gameId
      * @param player
      * @param request
@@ -163,9 +173,10 @@ public class GamesController {
     public void aquireTurn(@PathVariable final String gameId, @RequestBody final Player player,
                            HttpServletRequest request, HttpServletResponse response) {
         Game game = gamesService.findGame(gameId);
-        if(game ==null){
+        if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+                    .getPathInfo());
             return;
         }
         gamesService.obtainPlayerMutex(game);
@@ -173,16 +184,19 @@ public class GamesController {
 
     /**
      * Give away Mutex
+     *
      * @param gameId
      * @param request
      * @param response
      */
     @RequestMapping(value = "/{gameId}/players/turn", method = RequestMethod.DELETE)
-    public void releaseTurn(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response) {
+    public void releaseTurn(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse
+            response) {
         Game game = gamesService.findGame(gameId);
-        if(game ==null){
+        if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+                    .getPathInfo());
             return;
         }
         gamesService.dropPlayerMutex(game);
@@ -214,11 +228,12 @@ public class GamesController {
                 .build();
         createGame(game, request, response);
     }
+
     @RequestMapping(value = "/test/{gameId}", method = RequestMethod.GET)
-    public void runTest2(@PathVariable final String gameId,HttpServletRequest request, HttpServletResponse response)
+    public void runTest2(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response)
             throws
             IOException {
-        joinGame(gameId,"123","Peter","http://localhost:456/player/123",request,response);
+        joinGame(gameId, "123", "Peter", "http://localhost:456/player/123", request, response);
     }
 
 }

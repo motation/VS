@@ -16,7 +16,7 @@ public class PlayerRegistry {
     private List<Player> players;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         players = new ArrayList<>();
         Place testPlace = Place.builder()
                 .withName("Start")
@@ -32,14 +32,18 @@ public class PlayerRegistry {
         players.add(testPlayer);
     }
 
-    public Player playerById(String playerId){
+    public Player playerById(String playerId) {
         Player searchedPlayer = null;
-        for(Player player : players){
-            if(player.getId().equals(playerId)){
+        for (Player player : players) {
+            if (player.getId().equals(playerId)) {
                 searchedPlayer = player;
                 break;
             }
         }
         return searchedPlayer;
+    }
+
+    public boolean createPlayer(Player player) {
+        return playerById(player.getId()) != null ? players.add(player) : false;
     }
 }
