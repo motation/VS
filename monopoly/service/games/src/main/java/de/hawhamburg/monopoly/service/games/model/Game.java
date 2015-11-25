@@ -54,6 +54,10 @@ public class Game {
         return p;
     }
 
+    public boolean addPlayer(Player player){
+        Player p = players.put(player.getId(), player);
+        return p == null;
+    }
 
     public static class GameBuilder{
         private Game game;

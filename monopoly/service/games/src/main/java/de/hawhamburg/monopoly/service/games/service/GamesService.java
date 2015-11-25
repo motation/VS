@@ -32,7 +32,7 @@ public class GamesService {
         Player player = Player.builder().buildFromResource(uri);
         if(playerId.equals(player.getId()) && player.getName().equals(name)){
             player.setTurnOrder(game.getPlayers().size());
-            game.getPlayers().add(player);
+            game.addPlayer(player);
             return true;
         }
         return false;
