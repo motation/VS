@@ -14,10 +14,23 @@ import java.util.Map;
 public class Board {
 
     private Map<String, Player> players;
-    public final static int PRISON = 3;
+    private final static int PRISON = 3;
+    private final int gameId;
+    private List<Place> places;
 
-    public Board(){
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public Board(int gameId){
         players = new HashMap<>();
+        initPlaces();
+        this.gameId = gameId;
+    }
+
+    private void initPlaces() {
+        //TODO
     }
 
     public int getPosition(String playerId) {
@@ -41,5 +54,35 @@ public class Board {
         Player player = players.get(playerId);
         player.setPosition(PRISON);
         return PRISON;
+    }
+
+    public Player getPlayer(String playerId){
+        if(players.containsKey(playerId)){
+            return players.get(playerId);
+        }
+        Player player = new Player(playerId);
+        players.put(playerId, player);
+        return player;
+    }
+
+    public List<Player> getPlayers(){
+        return new ArrayList<>(players.values());
+    }
+
+    public Player removePlayer(String playerId) {
+        return players.remove(playerId);
+    }
+
+    public List<Place> getPlaces() {
+        return places;
+    }
+
+    public Place addPlace(Place place) {
+//        Place place = new Place(placeName);
+        //TODO Vielleicht auf Dubletten pruefen.
+        if(!places.contains(place)){
+            places.add(place);
+        }
+        return place;
     }
 }

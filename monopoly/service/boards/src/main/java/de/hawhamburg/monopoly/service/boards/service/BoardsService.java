@@ -3,6 +3,7 @@ package de.hawhamburg.monopoly.service.boards.service;
 import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistException;
 import de.hawhamburg.monopoly.service.boards.exception.PlayerNotReadyException;
 import de.hawhamburg.monopoly.service.boards.model.Board;
+import de.hawhamburg.monopoly.service.boards.model.Player;
 import de.hawhamburg.monopoly.service.dice.exception.InvalidRollException;
 import de.hawhamburg.monopoly.service.boards.model.Roll;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,13 @@ public class BoardsService {
 
     public List<Board> getBoards() {
         return registry.getBoards();
+    }
+
+    public Player getPlayer(int gameId, String playerId) throws EntityDoesNotExistException {
+        return registry.getBoard(gameId).getPlayer(playerId);
+    }
+
+    public boolean removePlayer(int gameId, String playerId) throws EntityDoesNotExistException {
+        return (registry.getBoard(gameId).removePlayer(playerId) != null);
     }
 }
