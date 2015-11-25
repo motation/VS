@@ -1,6 +1,6 @@
 package de.hawhamburg.monopoly.service.player.service;
 
-import de.hawhamburg.monopoly.service.games.model.Place;
+import de.hawhamburg.monopoly.service.player.model.Place;
 import de.hawhamburg.monopoly.service.player.model.Player;
 import org.springframework.stereotype.Service;
 

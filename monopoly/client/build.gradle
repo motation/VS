@@ -20,15 +20,6 @@ dependencies {
     compile(project(":util")) {
         transitive = false;
     }
-
-    compile(project(":games-service")) {
-        transitive = false;
-    }
-
-    compile(project(":player-service")) {
-        transitive = false;
-    }
-
 }
 
 
