@@ -35,14 +35,14 @@ public class GamesController {
     private GamesService gamesService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Game createGame(@RequestBody final Game game, HttpServletRequest request, HttpServletResponse response) {
-        Game newGame = gamesService.createNewGame(game);
+    public Game createGame(HttpServletRequest request, HttpServletResponse response) {
+        Game newGame = gamesService.createNewGame();
         if (newGame == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         } else {
             response.setStatus(HttpServletResponse.SC_CREATED);
         }
-        return game;
+        return newGame;
     }
 
     @RequestMapping(method = RequestMethod.GET)

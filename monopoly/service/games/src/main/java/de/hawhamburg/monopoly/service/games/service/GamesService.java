@@ -17,8 +17,8 @@ public class GamesService {
     @Autowired
     private GameRegistry gameRegistry;
 
-    public Game createNewGame(Game game){
-        return gameRegistry.addGame(game);
+    public Game createNewGame(){
+        return gameRegistry.addGame();
     }
 
     public List<Game> getGames(){

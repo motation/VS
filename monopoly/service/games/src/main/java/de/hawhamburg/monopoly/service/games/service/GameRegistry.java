@@ -19,8 +19,13 @@ public class GameRegistry {
         games = new ArrayList<>();
     }
 
-    public Game addGame(Game game) {
-        return games.add(game) ? game : null;
+    public Game addGame() {
+        Game game = Game.builder()
+                .withGameid("ABC")
+                .withUri("")
+                .build();
+        if(!games.add(game)) game = null;
+        return game;
     }
 
     public List<Game> getGames() {

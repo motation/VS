@@ -15,7 +15,8 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE")
+//    compile("org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE")
+    compile ('com.google.code.gson:gson:2.4')
 
     compile(project(":util")) {
         transitive = false;
