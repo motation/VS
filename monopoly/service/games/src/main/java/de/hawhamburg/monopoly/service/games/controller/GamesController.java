@@ -5,6 +5,8 @@ import de.hawhamburg.monopoly.service.games.model.Place;
 import de.hawhamburg.monopoly.service.games.model.Player;
 import de.hawhamburg.monopoly.service.games.model.wrapper.Games;
 import de.hawhamburg.monopoly.service.games.service.GamesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,9 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @RequestMapping(value = "/games")
 @RestController
 public class GamesController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(GamesController.class);
+
     @Autowired
     private GamesService gamesService;
 
@@ -103,14 +108,14 @@ public class GamesController {
         Game game = gamesService.findGame(Integer.toString(gameId));
         if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+            LOG.info("Game with GameId " + gameId + " does not exsist, but was requested in " + request
                     .getPathInfo());
             return false;
         }
         Player player = game.getPlayer(playerId);
         if (player == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Player with with PlayerId " + playerId + " in Game with  GameId " + gameId + " does " +
+            LOG.info("Player with with PlayerId " + playerId + " in Game with  GameId " + gameId + " does " +
                     "not exsist, but was requested in " + request.getPathInfo());
             return false;
         }
@@ -152,14 +157,14 @@ public class GamesController {
         Game game = gamesService.findGame(gameId);
         if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+            LOG.info("Game with GameId " + gameId + " does not exsist, but was requested in " + request
                     .getPathInfo());
             return null;
         }
         Player player = gamesService.findPlayerByTurnOrder(game, game.getActiveTurnOrder());
         if (player == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("No active Player was found. " + request.getPathInfo());
+            LOG.info("No active Player was found. " + request.getPathInfo());
         }
         return player;
     }
@@ -178,7 +183,7 @@ public class GamesController {
         Game game = gamesService.findGame(gameId);
         if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+            LOG.info("Game with GameId " + gameId + " does not exsist, but was requested in " + request
                     .getPathInfo());
             return;
         }
@@ -198,45 +203,10 @@ public class GamesController {
         Game game = gamesService.findGame(gameId);
         if (game == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            System.out.println("Game with GameId " + gameId + " does not exsist, but was requested in " + request
+            LOG.info("Game with GameId " + gameId + " does not exsist, but was requested in " + request
                     .getPathInfo());
             return;
         }
         gamesService.dropPlayerMutex(game);
     }
-
-    //OF TODO remove this dummy generator
-    // just for generation...
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public void runTest(HttpServletRequest request, HttpServletResponse response) {
-        List<Player> players = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
-            Place place = Place.builder()
-                    .withName("Place " + i)
-                    .build();
-            Player player = Player.builder()
-                    .withId("" + i)
-                    .withName("John " + i)
-                    .withPlace(place)
-                    .withPosition(i)
-                    .withReady(i % 2 == 0)
-                    .withUri("http://localhost:4567/player/" + i)
-                    .build();
-            players.add(player);
-        }
-        Game game = Game.builder()
-                .withGameid("10")
-                .withPlayers(players)
-                .withUri("http://localhost:4567/games/10")
-                .build();
-        createGame(game, request, response);
-    }
-
-    @RequestMapping(value = "/test/{gameId}", method = RequestMethod.GET)
-    public void runTest2(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response)
-            throws
-            IOException {
-//        joinGame(gameId, "123", "Peter", "http://localhost:456/player/123", request, response);
-    }
-
 }

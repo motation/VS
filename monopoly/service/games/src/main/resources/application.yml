@@ -4,3 +4,6 @@ server:
 info:
   component: Games Service
 
+logging:
+  level: WARN
+  de.hawhamburg: INFO
