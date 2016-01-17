@@ -25,7 +25,7 @@ public class ServicesService {
     private static final String BASE_URI_HAW_DOCKER = "https://vs-docker.informatik.haw-hamburg.de/ports/8053";
     private static final String URI_TO_DISCOVERY_SERVICE = BASE_URI_HAW_DOCKER + "/services";
     private static final String URI_FOR_NAME_OF_SERVICE = URI_TO_DISCOVERY_SERVICE + "/of/name";
-    private static final String USER_PASS_CRED = "abg631:p!vD87#60_!#";
+    private static final String USER_PASS_CRED = "user:pw";
 
     private static final Logger LOG = LoggerFactory.getLogger(ServicesService.class);
 
@@ -92,11 +92,4 @@ public class ServicesService {
         de.hawhamburg.services.entity.Service service = gson.fromJson(json, de.hawhamburg.services.entity.Service.class);
         return service.getUri();
     }
-
-    public static void main(String[] args) {
-        ServicesService servicesService = new ServicesService();
-        System.out.println(servicesService.getServiceUrlByName("games 008"));
-    }
-
-
 }
