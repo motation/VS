@@ -6,9 +6,6 @@ buildscript {
         mavenCentral()
         jcenter()
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
 }
 
 /**
@@ -17,7 +14,6 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
 
 
 /**
@@ -41,7 +37,8 @@ repositories {
  */
 dependencies {
     // TODO: Added ver no on the three service starter deps to make the maven plugin to work
-    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework:spring-web:4.2.3.RELEASE")
+    compile("org.slf4j:slf4j-simple:1.6.1")
     compile ('com.google.code.gson:gson:2.4')
 
     compile(project(":util")){
