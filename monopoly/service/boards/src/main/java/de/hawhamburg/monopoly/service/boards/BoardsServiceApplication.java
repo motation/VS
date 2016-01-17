@@ -20,12 +20,13 @@ public class BoardsServiceApplication {
     @Autowired
     private ServicesService servicesService;
 
+    // OF TODO container -> 1
+
     @PostConstruct
     public void registerToDiscoveryService() {
         de.hawhamburg.services.entity.Service service =
-                new de.hawhamburg.services.entity.Service("description", ServiceNames.NAME_OF_BOARDS_SERVICE,
-                        "boards", "uri");
-
+                new de.hawhamburg.services.entity.Service("This is a boards service by LO", ServiceNames.NAME_OF_BOARDS_SERVICE,
+                        "Boards Service Deluxe by LO", "https://vs-docker.informatik.haw-hamburg.de/ports/16311/boards");
         String result = servicesService.registerService(service);
         if (result == null) {
             LOG.warn("registration not successful!");
