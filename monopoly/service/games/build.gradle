@@ -74,6 +74,10 @@ dependencies {
 
     compile ('com.google.code.gson:gson:2.4')
 
+    compile(project(":services")){
+        transitive=false
+    }
+
     compile(project(":util")){
         transitive=false
     }
