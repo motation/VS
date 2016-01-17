@@ -42,3 +42,7 @@ Include Client
 
 include ":client"
 project(":client").projectDir = file("../../client")
+
+
+include ":services"
+project(":services").projectDir = file("../services")
