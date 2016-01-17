@@ -77,6 +77,10 @@ dependencies {
     compile(project(":util")){
         transitive=false
     }
+
+    compile(project(":services")){
+        transitive=false
+    }
 }
 
 task wrapper(type: Wrapper) {
