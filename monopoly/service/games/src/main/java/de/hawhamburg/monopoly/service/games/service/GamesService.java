@@ -25,17 +25,16 @@ public class GamesService {
         return gameRegistry.getGames();
     }
 
-    public boolean
-    joinGame(String gameId, String playerId, String name, String uri) throws IOException {
-        Game game = findGame(gameId);
-        if(game == null) return false;
+    public Player
+    joinGame(Game game, String playerId, String name, String uri) throws IOException {
+        if(game == null) return null;
         Player player = Player.builder().buildFromResource(uri);
         if(playerId.equals(player.getId()) && player.getName().equals(name)){
             player.setTurnOrder(game.getPlayers().size());
             game.addPlayer(player);
-            return true;
+            return player;
         }
-        return false;
+        return null;
     }
 
     public Game findGame(String gameId){
@@ -65,5 +64,13 @@ public class GamesService {
         tryingPlayer.setReady(false);
         game.setActiveTurnOrder((order+1)%game.getPlayers().size());
         return 0;
+    }
+
+    public boolean createBoard(Game game){
+        return true;//TODO
+    }
+
+    public boolean addPlayerToBoard(Game game, Player player){
+        return true;//TODO
     }
 }
