@@ -4,6 +4,7 @@ import de.hawhamburg.monopoly.service.games.model.Game;
 import de.hawhamburg.monopoly.service.games.model.Player;
 import de.hawhamburg.monopoly.service.games.model.wrapper.Games;
 import de.hawhamburg.monopoly.service.games.service.GamesService;
+import de.hawhamburg.services.service.ServicesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,14 @@ public class GamesController {
     private static final Logger LOG = LoggerFactory.getLogger(GamesController.class);
 
     @Autowired
+    private ServicesService services;
+
+    @Autowired
     private GamesService gamesService;
 
     @RequestMapping(method = RequestMethod.POST)
     public Game createGame(HttpServletRequest request, HttpServletResponse response) {
-        Game newGame = gamesService.createNewGame();
+        Game newGame = gamesService.createNewGame(services);
         if (newGame == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         } else {

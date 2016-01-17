@@ -2,8 +2,12 @@ package de.hawhamburg.monopoly.service.games.service;
 
 import de.hawhamburg.monopoly.service.games.model.Game;
 import de.hawhamburg.monopoly.service.games.model.Player;
+import de.hawhamburg.monopoly.util.Components;
+import de.hawhamburg.monopoly.util.ServiceNames;
+import de.hawhamburg.services.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -17,8 +21,15 @@ public class GamesService {
     @Autowired
     private GameRegistry gameRegistry;
 
-    public Game createNewGame(){
-        return gameRegistry.addGame();
+    public Game createNewGame(ServicesService services){
+        //TODO Dice Service DeckService Eventservice
+        de.hawhamburg.services.entity.Service sba = services.getServiceByName(ServiceNames.NAME_OF_BANKS_SERVICE);
+        de.hawhamburg.services.entity.Service sb = services.getServiceByName(ServiceNames.NAME_OF_BOARDS_SERVICE);
+        de.hawhamburg.services.entity.Service sbr = services.getServiceByName(ServiceNames.NAME_OF_BROKERS_SERVICE);
+        de.hawhamburg.services.entity.Service sp = services.getServiceByName(ServiceNames.NAME_OF_PLAYER_SERVICE);
+        de.hawhamburg.services.entity.Service sg = services.getServiceByName(ServiceNames.NAME_OF_GAMES_SERVICE);
+        Components c = Components.createComonents(sg.getName(),"DICESERVICE", sb.getUri(), sba.getUri(), sbr.getUri(),"DECKSSERVICE", "EVENTSSERVICE", sp.getUri());
+        return gameRegistry.addGame(c);
     }
 
     public List<Game> getGames(){
@@ -72,6 +83,7 @@ public class GamesService {
      * @return true for success, false on error
      */
     public boolean createBoard(Game game){
+
         return true;//TODO
     }
 

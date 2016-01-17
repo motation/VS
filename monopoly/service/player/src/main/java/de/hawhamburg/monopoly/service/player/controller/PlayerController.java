@@ -23,6 +23,7 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
+
     @RequestMapping(value="/{playerId}", method = RequestMethod.GET)
     public Player player(@PathVariable final String playerId){
         return playerService.getPlayer(playerId);
@@ -38,6 +39,21 @@ public class PlayerController {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
         return player;
+    }
+
+    @RequestMapping(value = "/turn", method = RequestMethod.POST)
+    public void notifyPlayerTurn(@RequestBody final Player player,HttpServletRequest request, HttpServletResponse
+            response){
+
+        //TODO Zug anzeigen
+
+    }
+
+    @RequestMapping(value = "/event", method = RequestMethod.POST)
+    public void notifyPlayerEvent(@RequestBody final Player player,HttpServletRequest request, HttpServletResponse
+            response){
+
+        //TODO Event auspacken.
     }
 
 }

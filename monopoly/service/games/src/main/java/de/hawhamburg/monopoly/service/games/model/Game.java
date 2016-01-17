@@ -86,6 +86,11 @@ public class Game {
             }
             return this;
         }
+        
+        public GameBuilder withComponents(Components components) {
+            this.game.components = components;
+            return this;
+        }
 
         public Game buildFromJson(String json){
             GsonBuilder builder = new GsonBuilder();
