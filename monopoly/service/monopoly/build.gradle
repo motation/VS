@@ -16,41 +16,7 @@ repositories {
  * Configure project internal as well as external dependencies
  */
 dependencies {
-    compile(project(":decks-service")) {
-        transitive = false;
-    }
 
-    compile(project(":player-service")) {
-        transitive = false;
-    }
-
-    compile(project(":dice-service")) {
-        transitive = false;
-    }
-
-    compile(project(":games-service")) {
-        transitive = false;
-    }
-
-    compile(project(":jail-service")) {
-        transitive = false;
-    }
-
-    compile(project(":banks-service")) {
-        transitive = false;
-    }
-
-    compile(project(":boards-service")) {
-        transitive = false;
-    }
-
-    compile(project(":brokers-service")) {
-        transitive = false;
-    }
-
-    compile(project(":util")) {
-        transitive = false;
-    }
 }
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'

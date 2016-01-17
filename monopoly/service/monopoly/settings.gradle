@@ -4,29 +4,29 @@ rootProject
 /*
 Include Monopoly Services
  */
-include ":decks-service"
-project(":decks-service").projectDir = file("../decks")
+include ":decks"
+project(":decks").projectDir = file("../decks")
 
-include ":player-service"
-project(":player-service").projectDir = file("../player")
+include ":player"
+project(":player").projectDir = file("../player")
 
-include ":dice-service"
-project(":dice-service").projectDir = file("../dice")
+include ":dice"
+project(":dice").projectDir = file("../dice")
 
-include ":games-service"
-project(":games-service").projectDir = file("../games")
+include ":games"
+project(":games").projectDir = file("../games")
 
-include ":jail-service"
-project(":jail-service").projectDir = file("../jail")
+include ":jail"
+project(":jail").projectDir = file("../jail")
 
-include ":banks-service"
-project(":banks-service").projectDir = file("../banks")
+include ":banks"
+project(":banks").projectDir = file("../banks")
 
-include ":boards-service"
-project(":boards-service").projectDir = file("../boards")
+include ":boards"
+project(":boards").projectDir = file("../boards")
 
-include ":brokers-service"
-project(":brokers-service").projectDir = file("../brokers")
+include ":brokers"
+project(":brokers").projectDir = file("../brokers")
 
 /*
 Include Util

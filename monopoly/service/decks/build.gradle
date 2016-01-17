@@ -35,7 +35,7 @@ import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
  * Define the name and version of the resulting jar file
  */
 jar {
-    baseName = 'decks-service'
+    baseName = 'decks'
     version = '0.0.1-SNAPSHOT'
 }
 
@@ -119,7 +119,7 @@ task createDockerfile(type: Dockerfile, dependsOn: [copyDist]) {
     maintainer 'Sven-Ole Fedders "sven-ole.fedders@haw-hamburg.de"'
     environmentVariable('JAVA_OPTS', '-Dspring.profiles.active=docker')
     exposePort(4567)
-    entryPoint("/decks-service/bin/decks-service")
+    entryPoint("/decks/bin/decks")
     addFile({
         jar.baseName + '.tar'
     }, {
@@ -134,5 +134,5 @@ task createDockerfile(type: Dockerfile, dependsOn: [copyDist]) {
  */
 task buildImage(type: DockerBuildImage, dependsOn: [createDockerfile]) {
     inputDir = createDockerfile.destFile.parentFile
-    tag = 'decks-service'
+    tag = 'decks'
 }
