@@ -21,11 +21,14 @@ public class GamesServiceApplication {
     @Autowired
     private ServicesService servicesService;
 
+    //OF TODO automatic build with port etc
+    //OF TODO currently games service uses port 16310 -> container 0
+
     @PostConstruct
     public void registerToDiscoveryService() {
         de.hawhamburg.services.entity.Service service =
-                new de.hawhamburg.services.entity.Service("description", ServiceNames.NAME_OF_GAMES_SERVICE,
-                        "games", "uri");
+                new de.hawhamburg.services.entity.Service("This is a game service by LO", ServiceNames.NAME_OF_GAMES_SERVICE,
+                        "Games Service Deluxe by LO", "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games");
 
         String result = servicesService.registerService(service);
         if (result == null) {
