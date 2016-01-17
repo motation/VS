@@ -66,10 +66,18 @@ public class GamesService {
         return 0;
     }
 
+    /**
+     * Creates a Board from Board Service
+     * @param game the game the Board is for
+     * @return true for success, false on error
+     */
     public boolean createBoard(Game game){
         return true;//TODO
     }
 
+    /**
+     * Adds the Player to the Board with the Board Service
+     */
     public boolean addPlayerToBoard(Game game, Player player){
         return true;//TODO
     }
