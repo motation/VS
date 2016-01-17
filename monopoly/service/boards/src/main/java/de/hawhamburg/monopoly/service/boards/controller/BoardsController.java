@@ -1,13 +1,13 @@
 package de.hawhamburg.monopoly.service.boards.controller;
 
 import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistException;
+import de.hawhamburg.monopoly.service.boards.exception.InvalidRollException;
 import de.hawhamburg.monopoly.service.boards.exception.PlayerNotReadyException;
 import de.hawhamburg.monopoly.service.boards.model.Board;
 import de.hawhamburg.monopoly.service.boards.model.Place;
 import de.hawhamburg.monopoly.service.boards.model.Player;
 import de.hawhamburg.monopoly.service.boards.model.wrapper.Rolls;
 import de.hawhamburg.monopoly.service.boards.service.BoardsService;
-import de.hawhamburg.monopoly.service.dice.exception.InvalidRollException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -136,10 +136,6 @@ public class BoardsController {
         try {
             boardsService.movePlayer(gameId,playerId,roll.getRoll1());
             boardsService.movePlayer(gameId,playerId,roll.getRoll2());
-        } catch (InvalidRollException e) {
-            System.out.println("Player with Id "+ playerId+ " wanted to move, but sent an invalid Roll");
-            response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
-            return false;
         } catch (PlayerNotReadyException e) {
             System.out.println("Player with Id "+ playerId+ " wanted to move, but was not ready");
             response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
