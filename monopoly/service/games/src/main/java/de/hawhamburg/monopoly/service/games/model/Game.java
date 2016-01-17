@@ -3,6 +3,7 @@ package de.hawhamburg.monopoly.service.games.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import de.hawhamburg.monopoly.util.Components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +18,14 @@ public class Game {
     private String gameid;
     private String uri;
     private Map<String, Player> players;
+    private Components components;
     @JsonIgnore
     private int activeTurnOrder = 0;
 
     public int getActiveTurnOrder(){return activeTurnOrder;}
 
     private Game(){
+        this.components = Components.getComponents();
         players = new HashMap<>();
     }
 
