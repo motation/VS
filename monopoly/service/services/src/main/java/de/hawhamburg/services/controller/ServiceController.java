@@ -16,13 +16,11 @@ public class ServiceController {
     private static final Logger LOG = LoggerFactory.getLogger(ServiceController.class);
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
     public void serviceHeartbeat(){
         LOG.info("heartbeat request");
     }
 
     @RequestMapping(value = "/api", method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
     public String api(){
         LOG.info("api request");
         return "This is the api resoruce";
