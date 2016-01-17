@@ -70,6 +70,14 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
     compile('javax.ws.rs:javax.ws.rs-api:2.0-m01')
+
+    compile(project(":util")){
+        transitive=false
+    }
+
+    compile(project(":services")){
+        transitive=false
+    }
 }
 
 task wrapper(type: Wrapper) {

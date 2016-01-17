@@ -1,5 +1,6 @@
 package de.hawhamburg.monopoly.service.games;
 
+import de.hawhamburg.monopoly.util.ServiceNames;
 import de.hawhamburg.services.service.ServicesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,8 @@ public class GamesServiceApplication {
     @PostConstruct
     public void registerToDiscoveryService() {
         de.hawhamburg.services.entity.Service service =
-                new de.hawhamburg.services.entity.Service("desrib", "gamesService", "games", "uri");
+                new de.hawhamburg.services.entity.Service("description", ServiceNames.NAME_OF_GAMES_SERVICE,
+                        "games", "uri");
 
         String result = servicesService.registerService(service);
         if (result == null) {
