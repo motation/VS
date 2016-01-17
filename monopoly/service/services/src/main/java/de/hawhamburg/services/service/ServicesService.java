@@ -65,10 +65,11 @@ public class ServicesService {
             LOG.warn("fetching service id by name failed with: " + e.getMessage());
             return null;
         }
+        //OF TODO will be removed later
         return response.getBody().getServices().get(0);
     }
 
-    public String getServiceUrlByName(String nameOfService){
+    public de.hawhamburg.services.entity.Service getServiceByName(String nameOfService){
         String suffixUrl = getSuffixUrlForBaseDockerHAW(nameOfService);
         RelaxedSSLValidation.useRelaxedSSLValidation();
         RestTemplate restTemplate = new RestTemplate();
@@ -90,6 +91,6 @@ public class ServicesService {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         de.hawhamburg.services.entity.Service service = gson.fromJson(json, de.hawhamburg.services.entity.Service.class);
-        return service.getUri();
+        return service;
     }
 }
