@@ -4,7 +4,7 @@ import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistExcepti
 import de.hawhamburg.monopoly.service.boards.exception.PlayerNotReadyException;
 import de.hawhamburg.monopoly.service.boards.model.Board;
 import de.hawhamburg.monopoly.service.boards.model.Player;
-import de.hawhamburg.monopoly.service.dice.exception.InvalidRollException;
+import de.hawhamburg.monopoly.service.boards.exception.InvalidRollException;
 import de.hawhamburg.monopoly.service.boards.model.Roll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +29,6 @@ public class BoardsService {
     }
 
     public int movePlayer(int gameId, String playerId, Roll roll) throws InvalidRollException, PlayerNotReadyException, IOException, EntityDoesNotExistException {
-//        if (!roll.isValid()) {
-//            throw new InvalidRollException();
-//        }
-//        if(!isPlayerReady(gameId, playerId)){
-//            throw new PlayerNotReadyException();
-//        }
             return registry.getBoard(gameId).moveByRoll(playerId, roll.getNumber());
 
     }

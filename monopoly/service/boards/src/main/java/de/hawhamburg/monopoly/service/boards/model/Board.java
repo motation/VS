@@ -1,6 +1,5 @@
 package de.hawhamburg.monopoly.service.boards.model;
 
-import de.hawhamburg.monopoly.service.dice.model.Roll;
 import de.hawhamburg.monopoly.service.boards.model.Player;
 
 import java.util.ArrayList;
