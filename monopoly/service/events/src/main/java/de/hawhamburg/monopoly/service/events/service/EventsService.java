@@ -2,6 +2,7 @@ package de.hawhamburg.monopoly.service.events.service;
 
 import de.hawhamburg.monopoly.service.events.model.Event;
 import de.hawhamburg.monopoly.service.events.model.Subscription;
+import de.hawhamburg.monopoly.util.RelaxedSSLValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -41,6 +42,7 @@ public class EventsService {
     }
 
     private void sendNotification(Subscription subscription){
+        RelaxedSSLValidation.useRelaxedSSLValidation();
         String url = subscription.getUri();
         Event[] events = new Event[1];
         events[0] = subscription.getEvent();
