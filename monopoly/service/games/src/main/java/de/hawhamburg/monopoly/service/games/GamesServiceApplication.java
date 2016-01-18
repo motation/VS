@@ -22,7 +22,7 @@ public class GamesServiceApplication {
     private ServicesService servicesService;
 
     //OF TODO automatic build with port etc
-    //OF TODO currently games service uses port 16310 -> container 0
+    //OF TODO currently games service uses port 16310 -> container -> 0
 
     @PostConstruct
     public void registerToDiscoveryService() {

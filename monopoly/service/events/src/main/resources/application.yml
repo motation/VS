@@ -1,0 +1,9 @@
+server:
+  port: 4567
+
+info:
+  component: Events Service
+
+logging:
+  level: WARN
+  de.hawhamburg: INFO
