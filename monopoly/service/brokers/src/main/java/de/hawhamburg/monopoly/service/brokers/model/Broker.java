@@ -7,7 +7,7 @@ import java.util.Set;
  * Created by Ole on 18.01.2016.
  */
 public class Broker {
-    
+
     public Broker() {
 
     }
