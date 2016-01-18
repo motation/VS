@@ -22,10 +22,10 @@ public class BoardsRegistry {
         boards = new HashMap<>();
     }
 
-    public Board addBoard(int gameId, Board board) {
-        if(boards.containsKey(gameId))
-            return  boards.get(gameId);
-        boards.put(gameId, board);
+    public Board addBoard(Board board) {
+        if(boards.containsKey(board.getGameId()))
+            return  boards.get(board.getGameId());
+        boards.put(board.getGameId(), board);
         return board;
     }
 

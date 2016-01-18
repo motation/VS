@@ -184,6 +184,11 @@ public class BoardsController {
         }
     }
 
+     @RequestMapping(value = "/boards/{gameId}", method = RequestMethod.PUT)
+    public Board createBoard(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
+         return boardsService.createNewBoard(gameId);
+     }
+
 
 
 }

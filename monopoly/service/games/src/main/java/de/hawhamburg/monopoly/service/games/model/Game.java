@@ -63,6 +63,10 @@ public class Game {
         return p == null;
     }
 
+    public Components getComponents(){
+        return components;
+    }
+
     public static class GameBuilder{
         private Game game;
 

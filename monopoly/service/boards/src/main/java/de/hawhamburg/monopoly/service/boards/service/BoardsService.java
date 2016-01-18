@@ -21,7 +21,7 @@ public class BoardsService {
     @Autowired
     BoardsRegistry registry;
 
-    public Board createNewBoard(int gameId, Board board){ return registry.addBoard(gameId, board);}
+    public Board createNewBoard(int gameId){ return registry.addBoard( new Board(gameId));}
 
     public int getPlayerPosition(int gameId, String playerId) throws EntityDoesNotExistException {
         return registry.getBoard(gameId).getPosition(playerId);
