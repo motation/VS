@@ -23,7 +23,7 @@ public class EventsServiceApplication {
     private ServicesService servicesService;
 
     //OF TODO automatic build with port etc
-    //OF TODO currently games service uses port 16310 -> container 4
+    //OF TODO currently games service uses port 16310 -> container -> 4
 
     @PostConstruct
     public void registerToDiscoveryService() {
