@@ -28,6 +28,9 @@ project(":boards").projectDir = file("../boards")
 include ":brokers"
 project(":brokers").projectDir = file("../brokers")
 
+include ":events"
+project(":events").projectDir = file("../events")
+
 /*
 Include Util
  */
