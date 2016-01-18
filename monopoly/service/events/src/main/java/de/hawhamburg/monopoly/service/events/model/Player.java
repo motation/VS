@@ -10,4 +10,29 @@ public class Player {
     private Place place;
     private int position;
     private boolean ready;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
 }

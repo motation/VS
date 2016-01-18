@@ -5,4 +5,8 @@ package de.hawhamburg.monopoly.service.events.model;
  */
 public class Place {
     private String name;
+
+    public String getName() {
+        return name;
+    }
 }

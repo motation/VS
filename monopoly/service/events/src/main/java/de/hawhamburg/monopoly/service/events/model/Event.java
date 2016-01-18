@@ -9,4 +9,24 @@ public class Event {
     private String reason;
     private String resource;
     private Player player;
+
+    public String getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
 }
