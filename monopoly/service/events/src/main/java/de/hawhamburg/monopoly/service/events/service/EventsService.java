@@ -20,6 +20,8 @@ public class EventsService {
 
     private List<Subscription> subscriptions;
 
+    private final String URI =  "https://vs-docker.informatik.haw-hamburg.de/ports/16314/events";
+
     @Autowired
     private RestTemplate restTemplate;
 
@@ -29,8 +31,10 @@ public class EventsService {
         subscriptions = new ArrayList<>();
     }
 
-    public boolean addEvent(Event event){
-        return this.events.add(event);
+    public String addEvent(Event event){
+        event.setUri(URI+"/"+this.events.size());
+        this.events.add(event);
+        return event.getUri();
     }
 
     public void notifySubscriber(String gameid){

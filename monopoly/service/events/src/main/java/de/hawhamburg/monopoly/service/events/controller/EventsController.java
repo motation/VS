@@ -18,14 +18,17 @@ public class EventsController {
     private EventsService eventsService;
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)
-    public void createEvent(@RequestParam final String gameid, @RequestBody final Event event,
+    public String createEvent(@RequestParam final String gameid, @RequestBody final Event event,
                             HttpServletResponse response){
-        if (eventsService.addEvent(event)) {
+        String uri;
+        if ((uri = eventsService.addEvent(event)).equals("")) {
             eventsService.notifySubscriber(gameid);
             response.setStatus(HttpServletResponse.SC_CREATED);
+
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
+        return uri;
     }
 
     @RequestMapping(value = "/events/subscriptions", method = RequestMethod.POST)

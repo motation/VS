@@ -8,6 +8,7 @@ public class Event {
     private String name;
     private String reason;
     private String resource;
+    private String uri;
     private Player player;
 
     public String getType() {
@@ -29,4 +30,9 @@ public class Event {
     public Player getPlayer() {
         return player;
     }
+
+    public String getUri() {return uri;}
+
+    public void setUri(String uri){ this.uri = uri; }
+
 }
