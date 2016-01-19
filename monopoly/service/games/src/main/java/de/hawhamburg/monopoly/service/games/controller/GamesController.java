@@ -41,9 +41,9 @@ public class GamesController {
     public Game createGame(HttpServletRequest request, HttpServletResponse response, @RequestBody final Components comp) {
         Game newGame;
 //        if(comp == null) {
-//            newGame = gamesService.createNewGame(services);
+            newGame = gamesService.createNewGame(services);
 //        }else{
-            newGame = gamesService.createNewGame(comp);
+//            newGame = gamesService.createNewGame(comp);
 //        }
         if (newGame == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
