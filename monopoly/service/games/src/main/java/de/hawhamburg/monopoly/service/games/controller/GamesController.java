@@ -40,11 +40,11 @@ public class GamesController {
     @RequestMapping(method = RequestMethod.POST)
     public Game createGame(HttpServletRequest request, HttpServletResponse response, @RequestBody final Components comp) {
         Game newGame;
-        if(comp == null) {
-            newGame = gamesService.createNewGame(services);
-        }else{
+//        if(comp == null) {
+//            newGame = gamesService.createNewGame(services);
+//        }else{
             newGame = gamesService.createNewGame(comp);
-        }
+//        }
         if (newGame == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         } else {
