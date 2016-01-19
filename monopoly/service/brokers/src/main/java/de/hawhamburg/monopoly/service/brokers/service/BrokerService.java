@@ -68,13 +68,12 @@ public class BrokerService {
         if (owner != null && !owner.getId().equals(playerid)) {
 
             //OF you dont own this estate pay for it(rent)
-            int rentLevel = estate.getRent().size() - 1;
-            int rentCost = estate.getRent().get(rentLevel);
+            int rentCost = estate.getRent().get(estate.getHouses());
             String bankUri = broker.getGame().getComponents().getBank();
 
             //OF TODO what is from and what is to?!
-            String from = "from";
-            String to = "to";
+            String from = playerid;
+            String to = owner.getId();
             int amount = rentCost;
 
             bankUri += "/" + gameid + "/transfer/from/" + from + "/to/" + to + "/" + amount;
@@ -112,14 +111,24 @@ public class BrokerService {
 
         if(estate.getOwner() == null){
             //OF TODO it is for sale
-            // OF TODO is it for sale if another user owns this property?!
+            // 1. pay money to the bank
             String bankUri = game.getComponents().getBank();
             bankUri += "";
-
+            
+            // 2. if successful set the owner for this estate
+            estate.setOwner(player.getId());
+            broker.getOwners().put(gameid,player);
 
         } else {
             //OF TODO not for sale!
-            // create events
+            Event event = new Event();
+            event.setName("Buy Property Event");
+            event.setUri("");
+            event.setType("buy event");
+            event.setReason("This place is not for sale");
+            event.setResource("");
+            event.setPlayer(player.getId());
+            resultedEvents.add(event);
         }
         return resultedEvents;
     }
