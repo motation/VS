@@ -25,8 +25,8 @@ public class BrokersServiceApplication {
     @PostConstruct
     public void registerToDiscoveryService() {
         de.hawhamburg.services.entity.Service service =
-                new de.hawhamburg.services.entity.Service("This is a Brokers service by LO", ServiceNames.NAME_OF_BROKERS_SERVICE,
-                        "Brokers Service Deluxe by LO", "https://vs-docker.informatik.haw-hamburg.de/ports/16312/brokers");
+                new de.hawhamburg.services.entity.Service("This is a Broker service by LO", ServiceNames.NAME_OF_BROKERS_SERVICE,
+                        "Broker Service Deluxe by LO", "https://vs-docker.informatik.haw-hamburg.de/ports/16312/broker");
         String result = servicesService.registerService(service);
         if (result == null) {
             LOG.warn("registration not successful!");

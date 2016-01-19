@@ -7,12 +7,29 @@ import java.util.List;
  * Created by Ole on 18.01.2016.
  */
 public class Estate {
+    // uri to the place on the board
     private String place;
+
+    // the uri to the owner resource of the estate
     private String owner;
+
+    // The value of the place, i.e. for how much it may be bought or sold
     private int value;
+
+    // Rent at current level
     private List<Integer> rent;
+
+    // Cost for house upgrade
     private List<Integer> cost;
+
+    // amount of houses set on the estate
     private int houses;
+
+    // the uri to the visit resource
+    private String visit;
+
+    //the uri to the hypocredit of the estate
+    private String hypocredit;
 
     public Estate() {
         rent = new ArrayList<>();
