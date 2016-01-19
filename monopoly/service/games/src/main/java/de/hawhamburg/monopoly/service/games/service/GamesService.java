@@ -5,15 +5,21 @@ import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.games.model.Game;
 import de.hawhamburg.monopoly.service.games.model.Player;
 import de.hawhamburg.monopoly.util.Components;
+import de.hawhamburg.monopoly.util.RelaxedSSLValidation;
 import de.hawhamburg.monopoly.util.Requester;
 import de.hawhamburg.monopoly.util.ServiceNames;
 import de.hawhamburg.services.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -29,7 +35,6 @@ public class GamesService {
     private RestTemplate restTemplate;
 
     public Game createNewGame(ServicesService services){
-        //TODO Dice Service DeckService Eventservice
         de.hawhamburg.services.entity.Service sba = services.getServiceByName(ServiceNames.NAME_OF_BANKS_SERVICE);
         de.hawhamburg.services.entity.Service sb = services.getServiceByName(ServiceNames.NAME_OF_BOARDS_SERVICE);
         de.hawhamburg.services.entity.Service sbr = services.getServiceByName(ServiceNames.NAME_OF_BROKERS_SERVICE);
@@ -37,7 +42,9 @@ public class GamesService {
         de.hawhamburg.services.entity.Service sg = services.getServiceByName(ServiceNames.NAME_OF_GAMES_SERVICE);
         de.hawhamburg.services.entity.Service sd = services.getServiceByName(ServiceNames.NAME_OF_DECKS_SERVICE);
         de.hawhamburg.services.entity.Service se = services.getServiceByName(ServiceNames.NAME_OF_EVENTS_SERVICE);
-        Components c = Components.createComonents(sg.getName(),"DICESERVICE", sb.getUri(), sba.getUri(), sbr.getUri(),sd.getUri(), se.getUri(), sp.getUri());
+        de.hawhamburg.services.entity.Service sdi = services.getServiceByName(ServiceNames.NAME_OF_DICE_SERVICE);
+
+        Components c = Components.createComonents(sg.getUri(),sdi.getUri(), sb.getUri(), sba.getUri(), sbr.getUri(),sd.getUri(), se.getUri(), sp.getUri());
         return gameRegistry.addGame(c);
     }
 
@@ -97,7 +104,7 @@ public class GamesService {
      * @return true for success, false on error
      */
     public boolean createBoard(Game game){
-        String uri = game.getComponents().getBoard()+ "/boards/" + game.getGameid();
+        String uri = game.getComponents().getBoard()+ "/" + game.getGameid();
         restTemplate.put(uri, game);
         return true;
     }
@@ -107,7 +114,7 @@ public class GamesService {
      * <br><b>Untested</b>
      */
     public boolean addPlayerToBoard(Game game, Player player){
-        String uri = game.getComponents().getBoard()+ "/boards/" + game.getGameid() + "/players/"+player.getId();
+        String uri = game.getComponents().getBoard()+ "/" + game.getGameid() + "/players/"+player.getId();
         restTemplate.put(uri, player);
         return true;
     }
