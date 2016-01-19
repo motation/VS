@@ -33,7 +33,9 @@ public class EventsService {
 
     public String addEvent(Event event){
         event.setUri(URI+"/"+this.events.size());
-        this.events.add(event);
+        if(!this.events.add(event)){
+            event.setUri("");
+        }
         return event.getUri();
     }
 
