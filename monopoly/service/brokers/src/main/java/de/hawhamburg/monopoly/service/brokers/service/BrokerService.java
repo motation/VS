@@ -111,10 +111,10 @@ public class BrokerService {
             //OF TODO it is for sale
             // 1. pay money to the bank
             String bankUri = game.getComponents().getBank();
-            bankUri += "banks/{gameid}/transfer/from/{from}/{amount}";
+            bankUri += "banks/" + gameid + "/transfer/from/" + player.getId() + "/" + estate.getValue();
 
             String reasonForMoneyTransfer = "Money for buying place with id = " + placeid;
-            ResponseEntity<Event[]> responseEntity = restTemplate.postForEntity(bankUri,reasonForMoneyTransfer,Event[].class);
+            ResponseEntity<Event[]> responseEntity = restTemplate.postForEntity(bankUri, reasonForMoneyTransfer, Event[].class);
             if (responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
                 // 2. if successful set the owner for this estate
                 estate.setOwner(player.getId());
@@ -137,7 +137,7 @@ public class BrokerService {
             event.setPlayer(player.getId());
 
             String eventUri = broker.getGame().getComponents().getEvents();
-            ResponseEntity<String> reponse = restTemplate.postForEntity(eventUri,event,String.class);
+            ResponseEntity<String> reponse = restTemplate.postForEntity(eventUri, event, String.class);
 
             String uriForEvent = reponse.getBody();
             event.setUri(uriForEvent);
