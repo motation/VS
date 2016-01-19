@@ -92,31 +92,23 @@ public class GamesService {
 
     /**
      * Creates a Board from Board Service
+     * <br><b>Untested</b>
      * @param game the game the Board is for
      * @return true for success, false on error
      */
     public boolean createBoard(Game game){
         String uri = game.getComponents().getBoard()+ "/boards/" + game.getGameid();
         restTemplate.put(uri, game);
-        return true;//TODO
+        return true;
     }
 
     /**
      * Adds the Player to the Board with the Board Service
+     * <br><b>Untested</b>
      */
     public boolean addPlayerToBoard(Game game, Player player){
         String uri = game.getComponents().getBoard()+ "/boards/" + game.getGameid() + "/players/"+player.getId();
         restTemplate.put(uri, player);
-        return true;//TODO
-    }
-
-
-    private boolean isPlayerReady(int gameId, int playerId) throws IOException {
-        String json = Requester.sendGetRequest("/games/" + gameId + "/turn");
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        Player p = gson.fromJson(json,Player.class);
-
-        return p.getId().equals(Integer.toString(playerId));
+        return true;
     }
 }
