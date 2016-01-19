@@ -110,11 +110,25 @@ public class BrokerService {
         Game game = broker.getGame();
 
         if(estate.getOwner() == null){
+            //OF TODO it is for sale
+            // 1. pay money to the bank
             String bankUri = game.getComponents().getBank();
             bankUri += "";
+            
+            // 2. if successful set the owner for this estate
+            estate.setOwner(player.getId());
+            broker.getOwners().put(gameid,player);
+
         } else {
             //OF TODO not for sale!
-            // create events
+            Event event = new Event();
+            event.setName("Buy Property Event");
+            event.setUri("");
+            event.setType("buy event");
+            event.setReason("This place is not for sale");
+            event.setResource("");
+            event.setPlayer(player.getId());
+            resultedEvents.add(event);
         }
         return resultedEvents;
     }
