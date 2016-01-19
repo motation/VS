@@ -14,15 +14,15 @@ public class Board {
 
     private Map<String, Player> players;
     private final static int PRISON = 3;
-    private final int gameId;
+    private final String gameId;
     private List<Place> places;
 
 
-    public int getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public Board(int gameId){
+    public Board(String gameId){
         players = new HashMap<>();
         initPlaces();
         this.gameId = gameId;

@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class BoardsRegistry {
 
-    private Map<Integer, Board> boards;
+    private Map<String, Board> boards;
 
     @PostConstruct
     public void init() {
@@ -32,13 +32,13 @@ public class BoardsRegistry {
     public List<Board> getBoards() {
         return new ArrayList<>(this.boards.values());
     }
-    public Board getBoard(int gameId) throws EntityDoesNotExistException {
+    public Board getBoard(String gameId) throws EntityDoesNotExistException {
         if(!boards.containsKey(gameId))
             throw new EntityDoesNotExistException();
         return this.boards.get(gameId);
     }
 
-    public Board deleteBoard(int gameId){
+    public Board deleteBoard(String gameId){
         return boards.remove(gameId);
     }
 }

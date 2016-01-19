@@ -21,51 +21,43 @@ public class BoardsService {
     @Autowired
     BoardsRegistry registry;
 
-    public Board createNewBoard(int gameId){ return registry.addBoard( new Board(gameId));}
+    public Board createNewBoard(String gameId){ return registry.addBoard( new Board(gameId));}
 
-    public int getPlayerPosition(int gameId, String playerId) throws EntityDoesNotExistException {
+    public int getPlayerPosition(String gameId, String playerId) throws EntityDoesNotExistException {
         return registry.getBoard(gameId).getPosition(playerId);
 
     }
 
-    public int movePlayer(int gameId, String playerId, Roll roll) throws InvalidRollException, PlayerNotReadyException, IOException, EntityDoesNotExistException {
+    public int movePlayer(String gameId, String playerId, Roll roll) throws InvalidRollException, PlayerNotReadyException, IOException, EntityDoesNotExistException {
             return registry.getBoard(gameId).moveByRoll(playerId, roll.getNumber());
 
     }
 
-    public int moveToPrison(int gameId, String playerId) throws PlayerNotReadyException, IOException, EntityDoesNotExistException {
+    public int moveToPrison(String gameId, String playerId) throws PlayerNotReadyException, IOException, EntityDoesNotExistException {
 //        if(!isPlayerReady(gameId, playerId)){
 //            throw new PlayerNotReadyException();
 //        }
         return registry.getBoard(gameId).moveToPrison(playerId);
     }
 
-    public Board getBoard(int gameId) throws EntityDoesNotExistException {
+    public Board getBoard(String gameId) throws EntityDoesNotExistException {
         return registry.getBoard(gameId);
     }
 
-    public boolean deleteBoard(int gameId){
+    public boolean deleteBoard(String gameId){
         return (registry.deleteBoard(gameId) != null);
     }
 
-//    private boolean isPlayerReady(int gameId, int playerId) throws IOException {
-//        String json = Requester.sendGetRequest("/games/" + gameId + "/turn");
-//        GsonBuilder builder = new GsonBuilder();
-//        Gson gson = builder.create();
-//        Player p = gson.fromJson(json,Player.class);
-//
-//        return p.getId().equals(Integer.toString(playerId));
-//    }
 
     public List<Board> getBoards() {
         return registry.getBoards();
     }
 
-    public Player getPlayer(int gameId, String playerId) throws EntityDoesNotExistException {
+    public Player getPlayer(String gameId, String playerId) throws EntityDoesNotExistException {
         return registry.getBoard(gameId).getPlayer(playerId);
     }
 
-    public boolean removePlayer(int gameId, String playerId) throws EntityDoesNotExistException {
+    public boolean removePlayer(String gameId, String playerId) throws EntityDoesNotExistException {
         return (registry.getBoard(gameId).removePlayer(playerId) != null);
     }
 }

@@ -65,7 +65,7 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
-    public boolean existsGame(int gameId, HttpServletRequest request, HttpServletResponse response){
+    public boolean existsGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
         try {
             boardsService.getBoard(gameId);
         } catch (EntityDoesNotExistException e) {
@@ -76,12 +76,12 @@ public class BoardsController {
     }
 
     @RequestMapping(value="/boards/{gameId}", method = RequestMethod.DELETE)
-    public boolean deleteGame(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
+    public boolean deleteGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
         return boardsService.deleteBoard(gameId);
     }
 
     @RequestMapping(value="/boards/{gameId}/players", method = RequestMethod.GET)
-    public List<Player> getAllPlayers(int gameId,HttpServletRequest request, HttpServletResponse response){
+    public List<Player> getAllPlayers(@PathVariable final String gameId,HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getBoard(gameId).getPlayers();
         } catch (EntityDoesNotExistException e) {
@@ -91,7 +91,7 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/boards/{gameId}/players/{playerId}", method = RequestMethod.PUT)
-    public boolean addPlayer(int gameId, String playerId,HttpServletRequest request, HttpServletResponse response){
+    public boolean addPlayer(@PathVariable final String gameId, @PathVariable final String playerId,HttpServletRequest request, HttpServletResponse response){
         try {
             boardsService.getPlayerPosition(gameId, playerId);
             return true;
@@ -102,7 +102,7 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/boards/{gameId}/players/{playerId}", method = RequestMethod.DELETE)
-    public boolean removePlayer(int gameId, String playerId,HttpServletRequest request, HttpServletResponse response){
+    public boolean removePlayer(@PathVariable final String  gameId, @PathVariable final String  playerId,HttpServletRequest request, HttpServletResponse response){
         try {
             boardsService.removePlayer(gameId,playerId);
         } catch (EntityDoesNotExistException e) {
@@ -113,7 +113,7 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/games/{gameId}/players/{playerId}", method = RequestMethod.GET)
-    public Player getPlayer(@PathVariable final int gameId, @PathVariable final String playerId, HttpServletRequest request, HttpServletResponse response){
+    public Player getPlayer(@PathVariable final String gameId, @PathVariable final String playerId, HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getPlayer(gameId, playerId);
 //            return boardsService.getPlayerPosition(gameId, playerId);
@@ -135,7 +135,7 @@ public class BoardsController {
      * @return
      */
     @RequestMapping(value = "/boards/{gameId}/players/{playerId}/roll", method = RequestMethod.POST)
-    public boolean postRoll(@PathVariable final int gameId, @PathVariable final String playerId, @RequestBody final Rolls roll
+    public boolean postRoll(@PathVariable final String gameId, @PathVariable final String playerId, @RequestBody final Rolls roll
             , HttpServletRequest request, HttpServletResponse response){
 
         try {
@@ -161,7 +161,7 @@ public class BoardsController {
 
 
     @RequestMapping(value = "/games/{gameId}/places", method = RequestMethod.GET)
-    public List<Place> getPlaces(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
+    public List<Place> getPlaces(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getBoard(gameId).getPlaces();
 //            return boardsService.getPlayerPosition(gameId, playerId);
@@ -173,7 +173,7 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/games/{gameId}/places/{placeId}", method = RequestMethod.PUT)
-    public Place addPlace(@PathVariable final int gameId, final String placeName, @RequestBody final Place place, HttpServletRequest request, HttpServletResponse response){
+    public Place addPlace(@PathVariable final String gameId, @PathVariable final String placeId, @RequestBody final Place place, HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getBoard(gameId).addPlace(place);
 //            return boardsService.getPlayerPosition(gameId, playerId);
@@ -185,7 +185,7 @@ public class BoardsController {
     }
 
      @RequestMapping(value = "/boards/{gameId}", method = RequestMethod.PUT)
-    public Board createBoard(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
+    public Board createBoard(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
          return boardsService.createNewBoard(gameId);
      }
 
