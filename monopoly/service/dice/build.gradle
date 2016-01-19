@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-jar.archiveName = "vsp_ab631.jar"
+
 
 /**
  * Load several plugins, consult the gradle documentation for more info
@@ -40,7 +40,7 @@ jar {
     baseName = 'dice'
     version = '0.0.1-SNAPSHOT'
 }
-
+jar.archiveName = "vsp_ab631.jar"
 /**
  * Define source and target java version compatibility
  */
