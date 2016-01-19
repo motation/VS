@@ -15,6 +15,6 @@ public class Roll {
     }
 
     public boolean isValid() {
-        return number >1 && number < 13;
+        return number >1 && number < 6;
     }
 }
