@@ -99,7 +99,7 @@ public class BrokerService {
     }
 
 
-    public List<Event> buyProperty(String gameid, int placeid,Player player) {
+    public List<Event> buyProperty(String gameid, int placeid, Player player) {
         //OF TODO IMPLEMENT!
 
         List<Event> resultedEvents = new ArrayList<>();
@@ -109,25 +109,34 @@ public class BrokerService {
         Estate estate = broker.getEstates().get(placeid);
         Game game = broker.getGame();
 
-        if(estate.getOwner() == null){
+        if (estate.getOwner() == null) {
             //OF TODO it is for sale
             // 1. pay money to the bank
             String bankUri = game.getComponents().getBank();
-            bankUri += "";
-            
+            bankUri += "banks/{gameid}/transfer/from/{from}/{amount}";
+
             // 2. if successful set the owner for this estate
             estate.setOwner(player.getId());
-            broker.getOwners().put(gameid,player);
+            broker.getOwners().put(gameid, player);
 
         } else {
             //OF TODO not for sale!
+            String resource = broker.getGame().getComponents().getBroker();
+            resource += "/" + gameid + "/places/" + placeid + "/owner";
             Event event = new Event();
             event.setName("Buy Property Event");
             event.setUri("");
             event.setType("buy event");
             event.setReason("This place is not for sale");
-            event.setResource("");
+            event.setResource(resource);
             event.setPlayer(player.getId());
+
+            String eventUri = broker.getGame().getComponents().getEvents();
+            ResponseEntity<String> reponse = restTemplate.postForEntity(eventUri,event,String.class);
+
+            String uriForEvent = reponse.getBody();
+            event.setUri(uriForEvent);
+
             resultedEvents.add(event);
         }
         return resultedEvents;

@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,8 +51,7 @@ public class EventsService {
     private void sendNotification(Subscription subscription){
         RelaxedSSLValidation.useRelaxedSSLValidation();
         String url = subscription.getUri();
-        Event[] events = new Event[1];
-        events[0] = subscription.getEvent();
+        Event[] events = this.events.toArray(new Event[this.events.size()]);
         restTemplate.postForEntity(url,events,Event[].class);
     }
 
