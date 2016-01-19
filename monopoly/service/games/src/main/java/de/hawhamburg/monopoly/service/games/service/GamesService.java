@@ -118,5 +118,5 @@ public class GamesService {
         restTemplate.put(uri, player);
         return true;
     }
-    
+
 }
