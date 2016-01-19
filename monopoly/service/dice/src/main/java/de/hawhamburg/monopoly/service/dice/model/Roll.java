@@ -1,5 +1,7 @@
 package de.hawhamburg.monopoly.service.dice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Created by Ole on 14.11.2015.
  */
@@ -14,6 +16,7 @@ public class Roll {
         return number;
     }
 
+    @JsonIgnore
     public boolean isValid() {
         return number >1 && number < 6;
     }
