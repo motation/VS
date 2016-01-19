@@ -41,7 +41,7 @@ jar {
     version = '0.0.1-SNAPSHOT'
 }
 
-jar.archiveName = "vsp_ab631.jar"
+jar.archiveName = "vsp_abg631.jar"
 
 /**
  * Define source and target java version compatibility
