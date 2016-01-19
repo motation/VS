@@ -1,9 +1,17 @@
 package de.hawhamburg.monopoly.service.games.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.games.model.Game;
 import de.hawhamburg.monopoly.service.games.model.Player;
+import de.hawhamburg.monopoly.util.Components;
+import de.hawhamburg.monopoly.util.Requester;
+import de.hawhamburg.monopoly.util.ServiceNames;
+import de.hawhamburg.services.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -17,8 +25,24 @@ public class GamesService {
     @Autowired
     private GameRegistry gameRegistry;
 
-    public Game createNewGame(){
-        return gameRegistry.addGame();
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public Game createNewGame(ServicesService services){
+        //TODO Dice Service DeckService Eventservice
+        de.hawhamburg.services.entity.Service sba = services.getServiceByName(ServiceNames.NAME_OF_BANKS_SERVICE);
+        de.hawhamburg.services.entity.Service sb = services.getServiceByName(ServiceNames.NAME_OF_BOARDS_SERVICE);
+        de.hawhamburg.services.entity.Service sbr = services.getServiceByName(ServiceNames.NAME_OF_BROKERS_SERVICE);
+        de.hawhamburg.services.entity.Service sp = services.getServiceByName(ServiceNames.NAME_OF_PLAYER_SERVICE);
+        de.hawhamburg.services.entity.Service sg = services.getServiceByName(ServiceNames.NAME_OF_GAMES_SERVICE);
+        de.hawhamburg.services.entity.Service sd = services.getServiceByName(ServiceNames.NAME_OF_DECKS_SERVICE);
+        de.hawhamburg.services.entity.Service se = services.getServiceByName(ServiceNames.NAME_OF_EVENTS_SERVICE);
+        Components c = Components.createComonents(sg.getName(),"DICESERVICE", sb.getUri(), sba.getUri(), sbr.getUri(),sd.getUri(), se.getUri(), sp.getUri());
+        return gameRegistry.addGame(c);
+    }
+
+    public Game createNewGame(Components comp){
+        return gameRegistry.addGame(comp);
     }
 
     public List<Game> getGames(){
@@ -68,17 +92,23 @@ public class GamesService {
 
     /**
      * Creates a Board from Board Service
+     * <br><b>Untested</b>
      * @param game the game the Board is for
      * @return true for success, false on error
      */
     public boolean createBoard(Game game){
-        return true;//TODO
+        String uri = game.getComponents().getBoard()+ "/boards/" + game.getGameid();
+        restTemplate.put(uri, game);
+        return true;
     }
 
     /**
      * Adds the Player to the Board with the Board Service
+     * <br><b>Untested</b>
      */
     public boolean addPlayerToBoard(Game game, Player player){
-        return true;//TODO
+        String uri = game.getComponents().getBoard()+ "/boards/" + game.getGameid() + "/players/"+player.getId();
+        restTemplate.put(uri, player);
+        return true;
     }
 }
