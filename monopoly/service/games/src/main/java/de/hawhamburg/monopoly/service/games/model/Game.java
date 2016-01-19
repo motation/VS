@@ -63,6 +63,10 @@ public class Game {
         return p == null;
     }
 
+    public Components getComponents(){
+        return components;
+    }
+
     public static class GameBuilder{
         private Game game;
 
@@ -84,6 +88,11 @@ public class Game {
             for(Player player : players){
                 this.game.players.put(player.getId(), player);
             }
+            return this;
+        }
+        
+        public GameBuilder withComponents(Components components) {
+            this.game.components = components;
             return this;
         }
 

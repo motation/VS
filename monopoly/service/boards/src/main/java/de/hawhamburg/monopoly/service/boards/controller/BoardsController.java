@@ -8,6 +8,8 @@ import de.hawhamburg.monopoly.service.boards.model.Place;
 import de.hawhamburg.monopoly.service.boards.model.Player;
 import de.hawhamburg.monopoly.service.boards.model.wrapper.Rolls;
 import de.hawhamburg.monopoly.service.boards.service.BoardsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,9 @@ import java.util.List;
 public class BoardsController {
     @Autowired
     private BoardsService boardsService;
+
+    private static final Logger LOG = LoggerFactory.getLogger(BoardsController.class);
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Board> getAllBoards(HttpServletRequest request, HttpServletResponse response){
@@ -137,16 +142,19 @@ public class BoardsController {
             boardsService.movePlayer(gameId,playerId,roll.getRoll1());
             boardsService.movePlayer(gameId,playerId,roll.getRoll2());
         } catch (PlayerNotReadyException e) {
-            System.out.println("Player with Id "+ playerId+ " wanted to move, but was not ready");
+            LOG.warn("Player with Id "+ playerId+ " wanted to move, but was not ready");
             response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
             return false;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         } catch (EntityDoesNotExistException e) {
-            System.out.println("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            LOG.warn("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return false;
+        } catch (InvalidRollException e) {
+            LOG.warn("Game with GameId "+gameId+ " got an Invalid Roll by player " +playerId+ " Pathinfo: "+ request.getPathInfo());
+            System.out.println("Game with GameId "+gameId+ " got an Invalid Roll by player " +playerId+ " Pathinfo: "+ request.getPathInfo());
         }
         return true;
     }
@@ -158,7 +166,7 @@ public class BoardsController {
             return boardsService.getBoard(gameId).getPlaces();
 //            return boardsService.getPlayerPosition(gameId, playerId);
         } catch (EntityDoesNotExistException e) {
-            System.out.println("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            LOG.warn("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return new ArrayList<>();
         }
@@ -170,11 +178,16 @@ public class BoardsController {
             return boardsService.getBoard(gameId).addPlace(place);
 //            return boardsService.getPlayerPosition(gameId, playerId);
         } catch (EntityDoesNotExistException e) {
-            System.out.println("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
+            LOG.warn("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return null;
         }
     }
+
+     @RequestMapping(value = "/boards/{gameId}", method = RequestMethod.PUT)
+    public Board createBoard(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response){
+         return boardsService.createNewBoard(gameId);
+     }
 
 
 

@@ -4,27 +4,18 @@ import de.hawhamburg.monopoly.service.games.model.Game;
 import de.hawhamburg.monopoly.service.games.model.Player;
 import de.hawhamburg.monopoly.service.games.model.wrapper.Games;
 import de.hawhamburg.monopoly.service.games.service.GamesService;
+import de.hawhamburg.monopoly.util.Components;
+import de.hawhamburg.services.service.ServicesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.io.IOException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.Base64;
 import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -41,14 +32,23 @@ public class GamesController {
     private static final Logger LOG = LoggerFactory.getLogger(GamesController.class);
 
     @Autowired
+    private ServicesService services;
+
+    @Autowired
     private GamesService gamesService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Game createGame(HttpServletRequest request, HttpServletResponse response) {
-        Game newGame = gamesService.createNewGame();
+    public Game createGame(HttpServletRequest request, HttpServletResponse response, @RequestBody final Components comp) {
+        Game newGame;
+        if(comp == null) {
+            newGame = gamesService.createNewGame(services);
+        }else{
+            newGame = gamesService.createNewGame(comp);
+        }
         if (newGame == null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         } else {
+            gamesService.createBoard(newGame);
             response.setStatus(HttpServletResponse.SC_CREATED);
         }
         return newGame;
@@ -88,8 +88,10 @@ public class GamesController {
             IOException {
         String name = params.substring(params.indexOf("=") + 1, params.indexOf("&"));
         String uri = params.substring(params.indexOf("uri") + 4);
-        boolean successfulJoined = gamesService.joinGame(gameId, playerId, name, uri);
-        if (successfulJoined) {
+        Game game = gamesService.findGame(gameId);
+        Player player = gamesService.joinGame(game, playerId, name, uri);
+        if (player != null) {
+            gamesService.addPlayerToBoard(game, player);
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);

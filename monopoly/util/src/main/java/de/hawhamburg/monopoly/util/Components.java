@@ -3,6 +3,9 @@ package de.hawhamburg.monopoly.util;
 /**
  * Created by Ole on 24.11.2015.
  */
+
+
+
 public class Components {
     private static final String HTTP_LOCALHOST_4567_GAMES = "http://localhost:4567/games";
     private static final String HTTP_LOCALHOST_4567_DICE = "http://localhost:4567/dice";
@@ -68,6 +71,19 @@ public class Components {
         components.decks = HTTP_LOCALHOST_4567_DECKS;
         components.events = HTTP_LOCALHOST_4567_EVENTS;
         components.player = HTTP_LOCALHOST_4567_PLAYER;
+        return components;
+    }
+
+    public static Components createComonents(String game, String dice, String board, String bank, String broker, String decks, String events, String player){
+        Components components = new Components();
+        components.game = game;
+        components.dice = dice;
+        components.board = board;
+        components.bank = bank;
+        components.broker = broker;
+        components.decks = decks;
+        components.events = events;
+        components.player = player;
         return components;
     }
 

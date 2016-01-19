@@ -1,7 +1,10 @@
 package de.hawhamburg.monopoly.service.player.controller;
 
+import de.hawhamburg.monopoly.service.player.model.Event;
 import de.hawhamburg.monopoly.service.player.model.Player;
 import de.hawhamburg.monopoly.service.player.service.PlayerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,8 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
+    private static final Logger LOG = LoggerFactory.getLogger(PlayerController.class);
+
     @RequestMapping(value="/{playerId}", method = RequestMethod.GET)
     public Player player(@PathVariable final String playerId){
         return playerService.getPlayer(playerId);
@@ -38,6 +43,24 @@ public class PlayerController {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
         return player;
+    }
+
+    @RequestMapping(value = "/turn", method = RequestMethod.POST)
+    public void notifyPlayerTurn(HttpServletRequest request, HttpServletResponse
+            response){
+        Player player = playerService.getPlayer();
+        System.out.println("Your Turn!");
+        LOG.info("Player "+player.getName()+" was received, a Turn event.");
+        //TODO Zug anzeigen
+
+    }
+
+    @RequestMapping(value = "/event", method = RequestMethod.POST)
+    public void notifyPlayerEvent(@RequestBody final Event[] events, HttpServletRequest request, HttpServletResponse
+            response){
+        for(Event e : events) {
+            System.out.println(e.getName());
+        }
     }
 
 }
