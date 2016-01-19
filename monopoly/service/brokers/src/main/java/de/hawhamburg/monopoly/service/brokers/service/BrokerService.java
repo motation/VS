@@ -88,12 +88,18 @@ public class BrokerService {
                     resultedEvents = Arrays.asList(responseEntity.getBody());
                 } else if (responseEntity.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
                     //OF TODO create events for forbidden transfer...
+                    //OF TODO what to do here?
+                    //OF TODO MAYBE CREATE EVENT
+                    resultedEvents = null;
                 }
             } catch (RestClientException e) {
                 e.printStackTrace();
             }
         } else {
             // OF TODO create events for not paying because no one owns this property
+            //OF TODO what to do here?
+            //OF TODO MAYBE CREATE EVENT
+            resultedEvents = null;
         }
         return resultedEvents;
     }
@@ -122,6 +128,7 @@ public class BrokerService {
                 resultedEvents = Arrays.asList(responseEntity.getBody());
             } else {
                 //OF TODO what to do if it fails?
+                //OF TODO MAYBE CREATE EVENT
                 resultedEvents = null;
             }
         } else {
@@ -142,6 +149,7 @@ public class BrokerService {
             String uriForEvent = reponse.getBody();
             event.setUri(uriForEvent);
             //OF TODO what to do if fails?!
+            //OF TODO MAYBE CREATE EVENT
 //            resultedEvents.add(event);
             resultedEvents = null;
         }
