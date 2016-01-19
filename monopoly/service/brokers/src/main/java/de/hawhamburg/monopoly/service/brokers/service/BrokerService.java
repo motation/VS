@@ -100,8 +100,6 @@ public class BrokerService {
 
 
     public List<Event> buyProperty(String gameid, int placeid, Player player) {
-        //OF TODO IMPLEMENT!
-
         List<Event> resultedEvents = new ArrayList<>();
 
         // buy this place, but it will fail if it is not for sale
@@ -115,10 +113,17 @@ public class BrokerService {
             String bankUri = game.getComponents().getBank();
             bankUri += "banks/{gameid}/transfer/from/{from}/{amount}";
 
-            // 2. if successful set the owner for this estate
-            estate.setOwner(player.getId());
-            broker.getOwners().put(gameid, player);
-
+            String reasonForMoneyTransfer = "Money for buying place with id = " + placeid;
+            ResponseEntity<Event[]> responseEntity = restTemplate.postForEntity(bankUri,reasonForMoneyTransfer,Event[].class);
+            if (responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
+                // 2. if successful set the owner for this estate
+                estate.setOwner(player.getId());
+                broker.getOwners().put(gameid, player);
+                resultedEvents = Arrays.asList(responseEntity.getBody());
+            } else {
+                //OF TODO what to do if it fails?
+                resultedEvents = null;
+            }
         } else {
             //OF TODO not for sale!
             String resource = broker.getGame().getComponents().getBroker();
@@ -136,8 +141,9 @@ public class BrokerService {
 
             String uriForEvent = reponse.getBody();
             event.setUri(uriForEvent);
-
-            resultedEvents.add(event);
+            //OF TODO what to do if fails?!
+//            resultedEvents.add(event);
+            resultedEvents = null;
         }
         return resultedEvents;
     }
