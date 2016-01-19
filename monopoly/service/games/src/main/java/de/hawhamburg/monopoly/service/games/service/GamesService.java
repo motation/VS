@@ -40,11 +40,11 @@ public class GamesService {
         de.hawhamburg.services.entity.Service sbr = services.getServiceByName(ServiceNames.NAME_OF_BROKERS_SERVICE);
         de.hawhamburg.services.entity.Service sp = services.getServiceByName(ServiceNames.NAME_OF_PLAYER_SERVICE);
         de.hawhamburg.services.entity.Service sg = services.getServiceByName(ServiceNames.NAME_OF_GAMES_SERVICE);
-        de.hawhamburg.services.entity.Service sd = services.getServiceByName(ServiceNames.NAME_OF_DECKS_SERVICE);
+//        de.hawhamburg.services.entity.Service sd = services.getServiceByName(ServiceNames.NAME_OF_DECKS_SERVICE);
         de.hawhamburg.services.entity.Service se = services.getServiceByName(ServiceNames.NAME_OF_EVENTS_SERVICE);
         de.hawhamburg.services.entity.Service sdi = services.getServiceByName(ServiceNames.NAME_OF_DICE_SERVICE);
 
-        Components c = Components.createComonents(sg.getUri(),sdi.getUri(), sb.getUri(), "not our service", sbr.getUri(),sd.getUri(), se.getUri(), sp.getUri());
+        Components c = Components.createComonents(sg.getUri(),sdi.getUri(), sb.getUri(), "not our service", sbr.getUri(),"not our service", se.getUri(), sp.getUri());
         return gameRegistry.addGame(c);
     }
 

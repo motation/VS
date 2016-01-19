@@ -66,7 +66,8 @@ public class ServicesService {
             return null;
         }
         //OF TODO will be removed later
-        return response.getBody().getServices().get(0);
+        int lastEntry = response.getBody().getServices().size() - 1;
+        return response.getBody().getServices().get(lastEntry);
     }
 
     public de.hawhamburg.services.entity.Service getServiceByName(String nameOfService){
