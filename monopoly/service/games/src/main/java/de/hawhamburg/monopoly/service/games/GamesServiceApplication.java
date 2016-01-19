@@ -41,7 +41,7 @@ public class GamesServiceApplication {
             ip = InetAddress.getLocalHost();
             LOG.info("Current IP address : " + ip.getHostAddress());
             String urlOfService = ip.getHostAddress() + ":" + port;
-            service.setUri("http://"+urlOfService + "/games");
+            service.setUri("http://" + urlOfService + "/games");
         } catch (UnknownHostException e) {
             LOG.info("error getting ip adress!");
             e.printStackTrace();
