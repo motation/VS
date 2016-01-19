@@ -12,6 +12,8 @@ buildscript {
     }
 }
 
+jar.archiveName = "vsp_ab631.jar"
+
 /**
  * Load several plugins, consult the gradle documentation for more info
  */

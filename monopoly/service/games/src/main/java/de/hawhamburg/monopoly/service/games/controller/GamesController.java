@@ -39,6 +39,7 @@ public class GamesController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Game createGame(HttpServletRequest request, HttpServletResponse response, @RequestBody final Components comp) {
+        LOG.info("got a request to post method of createGame");
         Game newGame;
 //        if(comp == null) {
             newGame = gamesService.createNewGame(services);
