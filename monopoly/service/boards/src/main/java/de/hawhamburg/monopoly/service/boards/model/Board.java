@@ -24,12 +24,8 @@ public class Board {
 
     public Board(Game game){
         players = new HashMap<>();
-        initPlaces();
+        places = new ArrayList<>();
         this.game = game;
-    }
-
-    private void initPlaces() {
-        //TODO
     }
 
     public int getPosition(String playerId) {
@@ -77,11 +73,13 @@ public class Board {
     }
 
     public Place addPlace(Place place) {
+        if (places == null)
+            places = new ArrayList<>();
 //        Place place = new Place(placeName);
-        //TODO Vielleicht auf Dubletten pruefen.
-        if(!places.contains(place)){
+//        if(!places.contains(place)){
+
             places.add(place);
-        }
+//        }
 
         return place;
     }

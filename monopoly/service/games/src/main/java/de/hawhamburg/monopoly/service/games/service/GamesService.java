@@ -136,8 +136,8 @@ public class GamesService {
     }
 
     private static Place addPlace(HttpHeaders headers,Game game) {
-//        String uri = "https://vs-docker.informatik.haw-hamburg.de/ports/11801/boards/"+game.getGameid()+"/places/Los";
-        String uri = "http://127.0.0.1:4567/boards/"+game.getGameid()+"/places/123";
+        String uri = "https://vs-docker.informatik.haw-hamburg.de/ports/11801/boards/"+game.getGameid()+"/places/Los";
+//        String uri = "http://127.0.0.1:4567/boards/"+game.getGameid()+"/places/123";
         Place p = Place.builder().withName("Los").withUri(uri).build();
         RestTemplate template = new RestTemplate();
         HttpEntity<Place> entity = new HttpEntity(p,headers);

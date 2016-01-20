@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -27,7 +28,7 @@ public class BoardsServiceApplication {
 
     // OF TODO container -> 1
 
-//    @PostConstruct
+    @PostConstruct
     public void registerToDiscoveryService() {
         de.hawhamburg.services.entity.Service service =
                 new de.hawhamburg.services.entity.Service("This is a boards service by LO", ServiceNames.NAME_OF_BOARDS_SERVICE,
