@@ -1,9 +1,6 @@
 package de.hawhamburg.monopoly.service.brokers.controller;
 
-import de.hawhamburg.monopoly.service.brokers.model.Estate;
-import de.hawhamburg.monopoly.service.brokers.model.Event;
-import de.hawhamburg.monopoly.service.brokers.model.Game;
-import de.hawhamburg.monopoly.service.brokers.model.Player;
+import de.hawhamburg.monopoly.service.brokers.model.*;
 import de.hawhamburg.monopoly.service.brokers.service.BrokerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +29,8 @@ public class BrokersController {
                                     @RequestBody final Game game, HttpServletResponse response) {
         if (brokerService.createBrokerForGame(gameid, game)) {
             response.setStatus(HttpServletResponse.SC_CREATED);
+            Broker broker = brokerService.getBroker(gameid);
+//            response.setHeader("Location",broker.getUri());
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
