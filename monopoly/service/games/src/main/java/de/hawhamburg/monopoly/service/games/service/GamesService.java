@@ -57,7 +57,7 @@ public class GamesService {
     public Player
     joinGame(Game game, String playerId, String name, String uri) throws IOException {
         if(game == null) return null;
-        Player player = Player.builder().buildFromResource(uri);
+        Player player = Player.builder().withId(playerId).withName(name).withUri(uri).build();
         if(playerId.equals(player.getId()) && player.getName().equals(name)){
             player.setTurnOrder(game.getPlayers().size());
             game.addPlayer(player);
