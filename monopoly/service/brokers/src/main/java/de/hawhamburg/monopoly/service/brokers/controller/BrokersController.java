@@ -2,6 +2,8 @@ package de.hawhamburg.monopoly.service.brokers.controller;
 
 import de.hawhamburg.monopoly.service.brokers.model.*;
 import de.hawhamburg.monopoly.service.brokers.service.BrokerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 @RestController
 public class BrokersController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BrokersController.class);
+
     @Autowired
     private BrokerService brokerService;
 
@@ -75,7 +80,11 @@ public class BrokersController {
 
     @RequestMapping(value = "/broker/{gameid}",method = RequestMethod.GET)
     public Broker getBrokerForGame(@PathVariable final String gameid){
-        return brokerService.getBroker(gameid);
+        LOG.info("Got a request go GET -> /broker/"+gameid);
+        Broker broker = brokerService.getBroker(gameid);
+        LOG.info("Broker is with : " + broker.getGame().getGameid() );
+        LOG.info("Broker with estastes size= " + broker.getEstates().size());
+        return broker;
     }
 
 }
