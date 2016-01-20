@@ -16,6 +16,7 @@ public class Game {
     private String gameid;
     private String uri;
     private List<Player> playerList;
+    private String players;
 //    private Map<String, Player> playersMap;
     private Components components;
     @JsonIgnore
@@ -24,7 +25,6 @@ public class Game {
     public int getActiveTurnOrder(){return activeTurnOrder;}
 
     private Game(){
-        this.components = Components.getComponents();
         playerList = new ArrayList<>();
     }
 
@@ -34,6 +34,10 @@ public class Game {
 
     public String getGameid() {
         return gameid;
+    }
+
+    public void setPlayers(String players) {
+        this.players = players;
     }
 
     public String getUri() {
