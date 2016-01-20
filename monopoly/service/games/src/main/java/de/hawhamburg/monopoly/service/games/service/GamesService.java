@@ -9,6 +9,7 @@ import de.hawhamburg.monopoly.util.RelaxedSSLValidation;
 import de.hawhamburg.monopoly.util.Requester;
 import de.hawhamburg.monopoly.util.ServiceNames;
 import de.hawhamburg.services.service.ServicesService;
+import de.hawhamburg.services.service.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -117,6 +118,21 @@ public class GamesService {
         String uri = game.getComponents().getBoard()+ "/" + game.getGameid() + "/players/"+player.getId();
         restTemplate.put(uri, player);
         return true;
+    }
+
+    public static void main(String[] args) {
+        RelaxedSSLValidation.useRelaxedSSLValidation();
+        String credentials = UserCredentials.getCredentials();
+        String encodedBase64Credentials = Base64.getEncoder().encodeToString(credentials.getBytes());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Basic " + encodedBase64Credentials);
+        HttpEntity entity = new HttpEntity(Components.getComponents(),headers);
+
+        String uriGames = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games";
+        RestTemplate temp = new RestTemplate();
+
+        ResponseEntity<Game> gameResult = temp.exchange(uriGames, HttpMethod.POST,entity,Game.class);
+        System.out.println(gameResult.getBody().toString());
     }
 
 }

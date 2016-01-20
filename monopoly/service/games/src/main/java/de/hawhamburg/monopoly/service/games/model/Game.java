@@ -17,7 +17,8 @@ public class Game {
 
     private String gameid;
     private String uri;
-    private Map<String, Player> players;
+    private List<Player> players;
+//    private Map<String, Player> playersMap;
     private Components components;
     @JsonIgnore
     private int activeTurnOrder = 0;
@@ -26,7 +27,7 @@ public class Game {
 
     private Game(){
         this.components = Components.getComponents();
-        players = new HashMap<>();
+        players = new ArrayList<>();
     }
 
     public String getGameid() {
@@ -39,7 +40,7 @@ public class Game {
 
     public List<Player> getPlayers() {
         //OF TODO not possible to add new player to the list
-        return new ArrayList<>(players.values());
+        return players;
     }
 
     public static GameBuilder builder(){
@@ -51,16 +52,17 @@ public class Game {
     }
 
     public Player getPlayer(String playerId) {
-        Player p = null;
-        if(players.containsKey(playerId)) {
-            p = players.get(playerId);
+        for(Player pl : players)
+        {
+            if(pl.getId().equals(playerId)){
+                return pl;
+            }
         }
-        return p;
+        return null;
     }
 
     public boolean addPlayer(Player player){
-        Player p = players.put(player.getId(), player);
-        return p == null;
+        return players.add(player);
     }
 
     public Components getComponents(){
@@ -85,9 +87,7 @@ public class Game {
         }
 
         public GameBuilder withPlayers(List<Player> players){
-            for(Player player : players){
-                this.game.players.put(player.getId(), player);
-            }
+            this.game.players = players;
             return this;
         }
         
