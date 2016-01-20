@@ -87,8 +87,8 @@ public class GamesController {
                          @RequestParam final String name, @RequestParam final String uri,
                          HttpServletRequest request, HttpServletResponse response) throws
             IOException {
-        Game game = gamesService.findGame(gameId);
         LOG.info("Player with id "+playerId+" trying to join game with id "+ gameId);
+        Game game = gamesService.findGame(gameId);
         LOG.info("Player name: "+name+" with uri: "+uri);
         Player player = gamesService.joinGame(game, playerId, name, uri);
         LOG.info("Player joined");

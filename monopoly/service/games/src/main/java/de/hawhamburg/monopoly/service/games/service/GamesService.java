@@ -1,23 +1,22 @@
 package de.hawhamburg.monopoly.service.games.service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.games.model.Game;
 import de.hawhamburg.monopoly.service.games.model.Place;
 import de.hawhamburg.monopoly.service.games.model.Player;
 import de.hawhamburg.monopoly.util.Components;
 import de.hawhamburg.monopoly.util.RelaxedSSLValidation;
-import de.hawhamburg.monopoly.util.Requester;
 import de.hawhamburg.monopoly.util.ServiceNames;
 import de.hawhamburg.services.service.ServicesService;
 import de.hawhamburg.services.service.UserCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.io.IOException;
 import java.util.Base64;
@@ -137,12 +136,14 @@ public class GamesService {
     }
 
     private static Place addPlace(HttpHeaders headers,Game game) {
-        String uri = game.getComponents().getBoard()+"/"+game.getGameid()+"/places/Los";
+//        String uri = "https://vs-docker.informatik.haw-hamburg.de/ports/11801/boards/"+game.getGameid()+"/places/Los";
+        String uri = "http://127.0.0.1:4567/boards/"+game.getGameid()+"/places/Los";
         Place p = Place.builder().withName("Los").withUri(uri).build();
         RestTemplate template = new RestTemplate();
-        HttpEntity entity = new HttpEntity(headers);
-        template.exchange(uri, HttpMethod.PUT,entity,String.class);
-        System.out.println("PLace created");
+        HttpEntity<Place> entity = new HttpEntity(p,headers);
+        System.out.println("Send to "+ uri);
+        template.exchange(uri, HttpMethod.PUT,entity,Place.class);
+        System.out.println("Place created");
         return p;
     }
 
@@ -150,7 +151,7 @@ public class GamesService {
 
         HttpEntity entity = new HttpEntity(Components.getComponents(),headers);
 
-        String uriGames = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games";
+        String uriGames = "https://vs-docker.informatik.haw-hamburg.de/ports/11800/games";
         RestTemplate temp = new RestTemplate();
 
         ResponseEntity<Game> gameResult = temp.exchange(uriGames, HttpMethod.POST,entity,Game.class);
@@ -161,7 +162,7 @@ public class GamesService {
     private static void addPlayer(HttpHeaders headers, Game game, Place place){
 
         String playerId = "Loki";
-        String joinGameUri = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games/";
+        String joinGameUri = "https://vs-docker.informatik.haw-hamburg.de/ports/11800/games/";
         String uri = "foobar";
 
         joinGameUri += game.getGameid();
@@ -170,6 +171,7 @@ public class GamesService {
         joinGameUri += "&uri="+uri;
         HttpEntity entity = new HttpEntity(headers);
         RestTemplate temp = new RestTemplate();
+        System.out.println(joinGameUri);
         temp.exchange(joinGameUri, HttpMethod.PUT, entity, String.class);
         System.out.println("Player added");
     }
