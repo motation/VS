@@ -61,19 +61,19 @@ public class BoardsController {
 }
 
          */
-        return new ArrayList<>();
+        return new ArrayList<Place>();
     }
 
-    @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
-    public boolean existsGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
-        try {
-            boardsService.getBoard(gameId);
-        } catch (EntityDoesNotExistException e) {
-            response.setStatus(HttpServletResponse.SC_CONFLICT);
-            return false;
-        }
-        return true;
-    }
+//    @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
+//    public boolean existsGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
+//        try {
+//            boardsService.getBoard(gameId);
+//        } catch (EntityDoesNotExistException e) {
+//            response.setStatus(HttpServletResponse.SC_CONFLICT);
+//            return false;
+//        }
+//        return true;
+//    }
 
     @RequestMapping(value="/boards/{gameId}", method = RequestMethod.DELETE)
     public boolean deleteGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
@@ -184,7 +184,7 @@ public class BoardsController {
         }
     }
 
-     @RequestMapping(value = "/boards/{gameId}", method = RequestMethod.PUT)
+     @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
     public Board createBoard(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
          return boardsService.createNewBoard(gameId);
      }
