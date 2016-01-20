@@ -69,9 +69,15 @@ public class BoardsController {
     }
 
     @RequestMapping(value="/{gameId}/players", method = RequestMethod.GET)
-    public List<Player> getAllPlayers(@PathVariable final String gameId,HttpServletRequest request, HttpServletResponse response){
+    public List<BoardPlayer> getAllPlayers(@PathVariable final String gameId,HttpServletRequest request, HttpServletResponse response){
         try {
-            return boardsService.getBoard(gameId).getPlayers();
+            Board board = boardsService.getBoard(gameId);
+            List<Player> players = board.getPlayers();
+            List<BoardPlayer> result = new ArrayList<>();
+            for(Player p : players){
+                result.add(new BoardPlayer(p, board));
+            }
+            return result;
         } catch (EntityDoesNotExistException e) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return new ArrayList<>();
