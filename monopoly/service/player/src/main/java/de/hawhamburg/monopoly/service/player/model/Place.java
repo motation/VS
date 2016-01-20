@@ -5,9 +5,17 @@ package de.hawhamburg.monopoly.service.player.model;
  */
 public class Place {
     private String name;
-
+    private String uri;
     private Place(){
 
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getName() {

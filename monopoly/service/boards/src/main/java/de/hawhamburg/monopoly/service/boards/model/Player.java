@@ -11,6 +11,7 @@ public class Player {
     private Place place;
     private int position;
     private String uri;
+    private String roll;
 
     public Player(String playerId) {
         id = playerId;
@@ -23,6 +24,7 @@ public class Player {
 
     public void setUri(String uri) {
         this.uri = uri;
+        this.roll = this.uri+"/roll";
     }
 
     public String getId() {
@@ -43,5 +45,9 @@ public class Player {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public String getRoll() {
+        return roll;
     }
 }

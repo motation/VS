@@ -9,6 +9,7 @@ import de.hawhamburg.monopoly.service.boards.service.BoardsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -123,28 +124,29 @@ public class BoardsController {
      * @return
      */
     @RequestMapping(value = "/{gameId}/players/{playerId}/roll", method = RequestMethod.POST)
-    public boolean postRoll(@PathVariable final String gameId, @PathVariable final String playerId, @RequestBody final Rolls roll
+    public Place postRoll(@PathVariable final String gameId, @PathVariable final String playerId, @RequestBody final Rolls roll
             , HttpServletRequest request, HttpServletResponse response){
 
         try {
             boardsService.movePlayer(gameId,playerId,roll.getRoll1());
             boardsService.movePlayer(gameId,playerId,roll.getRoll2());
+            return boardsService.getBoard(gameId).getPlayer(playerId).getPlace();
         } catch (PlayerNotReadyException e) {
             LOG.warn("Player with Id "+ playerId+ " wanted to move, but was not ready");
             response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
-            return false;
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return null;
         } catch (EntityDoesNotExistException e) {
             LOG.warn("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            return false;
+            return null;
         } catch (InvalidRollException e) {
             LOG.warn("Game with GameId "+gameId+ " got an Invalid Roll by player " +playerId+ " Pathinfo: "+ request.getPathInfo());
             System.out.println("Game with GameId "+gameId+ " got an Invalid Roll by player " +playerId+ " Pathinfo: "+ request.getPathInfo());
+            return null;
         }
-        return true;
     }
 
 
@@ -158,6 +160,13 @@ public class BoardsController {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return new ArrayList<>();
         }
+    }
+
+    @RequestMapping(value = "/{gameId}/places/{placeId}")
+    public ResponseEntity<String> getPlace(String gameId, String placeId)
+    {
+        //TODO
+        return "";
     }
 
     @RequestMapping(value = "/{gameId}/places/{placeId}", method = RequestMethod.PUT)

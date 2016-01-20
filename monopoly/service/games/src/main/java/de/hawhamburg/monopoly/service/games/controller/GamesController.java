@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -96,9 +97,18 @@ public class GamesController {
             gamesService.addPlayerToBoard(game, player);
             response.setStatus(HttpServletResponse.SC_OK);
             response.setHeader("Location",player.getUri());
+            notifyPlayerIsReady(player, game);
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
+    }
+
+    private void notifyPlayerIsReady(Player player, Game game) {
+        String uri1 = game.getComponents().getBoard()+"/"+game.getGameid()+"/players/"+player.getId();
+        String uri2 = game.getComponents().getBoard()+"/"+game.getGameid()+"/players/"+player.getId();
+        String json = "{ \"onboard\" : \""+uri1+"\", \"onbank\": \""+uri2+"\"}";
+        RestTemplate template = new RestTemplate();
+        template.postForEntity(game.getComponents().getPlayer()+"/turn", json, String.class);
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.DELETE)

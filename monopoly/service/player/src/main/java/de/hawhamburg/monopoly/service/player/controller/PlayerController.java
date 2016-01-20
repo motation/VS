@@ -1,12 +1,17 @@
 package de.hawhamburg.monopoly.service.player.controller;
 
-import de.hawhamburg.monopoly.service.player.model.Event;
-import de.hawhamburg.monopoly.service.player.model.Player;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import de.hawhamburg.monopoly.service.player.model.*;
 import de.hawhamburg.monopoly.service.player.service.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,11 +52,24 @@ public class PlayerController {
 
     @RequestMapping(value = "/turn", method = RequestMethod.POST)
     public void notifyPlayerTurn(HttpServletRequest request, HttpServletResponse
-            response){
+            response, @RequestBody final String json){
         Player player = playerService.getPlayer();
+        Gson gson = new GsonBuilder().create();
+        JsonObject jsonObject = gson.fromJson( json, JsonObject.class);
+        String boardPlayerURi =  jsonObject.get("onboard").getAsString();
         LOG.info("Your Turn!");
         LOG.info("Player "+player.getName()+" was received, a Turn event.");
-        //TODO Zug anzeigen
+        Roll r1 = new Roll(2);
+        Roll r2 = new Roll(4);
+        Rolls rolls = new Rolls();
+        rolls.setRoll1(r1);
+        rolls.setRoll2(r2);
+        RestTemplate template = new RestTemplate();
+        ResponseEntity<Place> entity = template.postForEntity(boardPlayerURi, rolls, Place.class);
+        String placeUri = entity.getBody().getUri();
+        ResponseEntity<String> place2Resp = template.getForEntity(placeUri, String.class);
+        jsonObject = gson.fromJson( json, JsonObject.class);
+        String brokerUri =  jsonObject.get("broker").getAsString();
 
     }
 
