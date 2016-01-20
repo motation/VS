@@ -35,6 +35,8 @@ public class Board {
             return players.get(playerId).getPosition();
         }
         Player player = new Player(playerId);
+        player.setPosition(0);
+        player.setPlace(places.get(player.getPosition()));
             players.put(playerId, player);
             return player.getPosition();
     }
@@ -42,7 +44,9 @@ public class Board {
     public int moveByRoll(String playerId, int roll) {
         Player player = players.get(playerId);
         //TODO was tun wenn der Spieler nicht existiert?
-        player.setPosition(player.getPosition()+roll);
+        int newPosition = (player.getPosition()+roll)%places.size();
+        player.setPosition(newPosition);
+        player.setPlace(places.get(player.getPosition()));
 //        int prevPosition = player.getPosition();
         return player.getPosition();
     }
