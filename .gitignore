@@ -23,3 +23,5 @@ build/
 *.ipr
 *.iws
 *.idea
+
+UserCredentials.java
