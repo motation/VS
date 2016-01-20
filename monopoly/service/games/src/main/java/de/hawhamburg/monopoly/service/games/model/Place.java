@@ -5,9 +5,14 @@ package de.hawhamburg.monopoly.service.games.model;
  */
 public class Place {
     private String name;
+    private String uri;
 
     private Place(){
 
+    }
+
+    public String getUri() {
+        return uri;
     }
 
     public String getName() {
@@ -30,24 +35,15 @@ public class Place {
             return this;
         }
 
+        public PlaceBuilder withUri(String uri){
+            this.place.uri = uri;
+            return this;
+        }
+
         public Place build(){
             return this.place;
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Place place = (Place) o;
-
-        return name.equals(place.name);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
 }
