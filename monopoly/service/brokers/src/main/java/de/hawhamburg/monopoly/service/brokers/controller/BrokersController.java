@@ -73,4 +73,9 @@ public class BrokersController {
         return resultedEvents;
     }
 
+    @RequestMapping(value = "/broker/{gameid}",method = RequestMethod.GET)
+    public Broker getBrokerForGame(@PathVariable final String gameid){
+        return brokerService.getBroker(gameid);
+    }
+
 }
