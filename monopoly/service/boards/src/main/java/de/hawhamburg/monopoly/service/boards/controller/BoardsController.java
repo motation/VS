@@ -173,9 +173,9 @@ public class BoardsController {
 
     @RequestMapping(value = "/{gameId}/places/{placeId}", method = RequestMethod.PUT)
     public Place addPlace(@PathVariable final String gameId, @PathVariable final String placeId, @RequestBody final Place place, HttpServletRequest request, HttpServletResponse response){
+        LOG.info("Trying to create place: "+ placeId + " for game "+ gameId+ " Place entity "+place.getUri());
         try {
             return boardsService.getBoard(gameId).addPlace(place);
-//            return boardsService.getPlayerPosition(gameId, playerId);
         } catch (EntityDoesNotExistException e) {
             LOG.warn("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
             response.setStatus(HttpServletResponse.SC_CONFLICT);
@@ -186,9 +186,9 @@ public class BoardsController {
      @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
     public Board createBoard(@PathVariable final String gameId, @RequestBody Game game, HttpServletRequest request, HttpServletResponse response){
          LOG.info("TRying to create Board for Game: "+gameId);
-         Board b = boardsService.createNewBoard(game);
+         Board board = boardsService.createNewBoard(game);
          LOG.info("Board created");
-         return b;
+         return board;
      }
 
 

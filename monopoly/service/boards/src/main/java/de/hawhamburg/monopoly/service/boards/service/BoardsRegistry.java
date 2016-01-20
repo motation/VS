@@ -25,7 +25,7 @@ public class BoardsRegistry {
     }
 
     public Board addBoard(Board board) {
-        LOG.info("Adding Board to registry");
+        LOG.info("Adding Board to registry  ");
         if(boards.containsKey(board.getGameId()))
             return  boards.get(board.getGameId());
         boards.put(board.getGameId(), board);
