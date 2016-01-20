@@ -3,6 +3,7 @@ package de.hawhamburg.monopoly.service.games.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.service.games.model.Game;
+import de.hawhamburg.monopoly.service.games.model.Place;
 import de.hawhamburg.monopoly.service.games.model.Player;
 import de.hawhamburg.monopoly.util.Components;
 import de.hawhamburg.monopoly.util.RelaxedSSLValidation;
@@ -117,7 +118,7 @@ public class GamesService {
      */
     public boolean addPlayerToBoard(Game game, Player player){
         String uri = game.getComponents().getBoard()+ "/" + game.getGameid() + "/players/"+player.getId();
-        HttpEntity entity = new HttpEntity(new HttpHeaders());
+        HttpEntity entity = new HttpEntity(player, new HttpHeaders());
         LOG.info("Sending to Uri: "+ uri);
         restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
 
@@ -130,6 +131,17 @@ public class GamesService {
         String encodedBase64Credentials = Base64.getEncoder().encodeToString(credentials.getBytes());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Basic " + encodedBase64Credentials);
+        String gameId = createGame(headers);
+        addPlace(gameId);
+        addPlayer(gameId);
+    }
+
+    private static String addPlace(String gameId) {
+
+    }
+
+    private static String createGame(HttpHeaders headers){
+
         HttpEntity entity = new HttpEntity(Components.getComponents(),headers);
 
         String uriGames = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games";
@@ -137,14 +149,20 @@ public class GamesService {
 
         ResponseEntity<Game> gameResult = temp.exchange(uriGames, HttpMethod.POST,entity,Game.class);
         System.out.println(gameResult.getBody().toString());
-        String playerId = "Loki";
-        String joinGameUri = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games/";
-        joinGameUri += gameResult.getBody().getGameid();
-        joinGameUri += "/players/"+playerId;
-        joinGameUri += "?name="+playerId;
-        joinGameUri += "&uri=foobar";
-        entity = new HttpEntity(headers);
-        temp.exchange(joinGameUri, HttpMethod.PUT, entity, String.class);
     }
 
+    private static void addPlayer(String gameId){
+
+        String playerId = "Loki";
+        String joinGameUri = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games/";
+        String uri = "foobar";
+        Place place = Place.builder().withName("Platz").build();
+        joinGameUri += gameId;
+        joinGameUri += "/players/"+playerId;
+        joinGameUri += "?name="+playerId;
+        joinGameUri += "&uri="+uri;
+        HttpEntity entity = new HttpEntity(new HttpHeaders());
+        RestTemplate temp = new RestTemplate();
+        temp.exchange(joinGameUri, HttpMethod.PUT, entity, String.class);
+    }
 }
