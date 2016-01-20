@@ -2,6 +2,8 @@ package de.hawhamburg.monopoly.service.boards.service;
 
 import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistException;
 import de.hawhamburg.monopoly.service.boards.model.Board;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,13 +18,14 @@ import java.util.*;
 public class BoardsRegistry {
 
     private Map<String, Board> boards;
-
+    private static final Logger LOG = LoggerFactory.getLogger(BoardsRegistry.class);
     @PostConstruct
     public void init() {
         boards = new HashMap<>();
     }
 
     public Board addBoard(Board board) {
+        LOG.info("Adding Board to registry  ");
         if(boards.containsKey(board.getGameId()))
             return  boards.get(board.getGameId());
         boards.put(board.getGameId(), board);

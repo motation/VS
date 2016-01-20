@@ -82,6 +82,7 @@ public class Board {
         if(!places.contains(place)){
             places.add(place);
         }
+
         return place;
     }
 }
