@@ -15,17 +15,28 @@ public class Game {
 
     private String gameid;
     private String uri;
-    private List<Player> players;
-//    private Map<String, Player> playersMap;
+    private List<Player> playerList;
+    private String players;
+
+    public String getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(String players) {
+        this.players = players;
+    }
+
+    //    private Map<String, Player> playersMap;
     private Components components;
     @JsonIgnore
     private int activeTurnOrder = 0;
 
-    public int getActiveTurnOrder(){return activeTurnOrder;}
+    public int getActiveTurnOrder() {
+        return activeTurnOrder;
+    }
 
-    private Game(){
-        this.components = Components.getComponents();
-        players = new ArrayList<>();
+    private Game() {
+        playerList = new ArrayList<>();
     }
 
     public String getGameid() {
@@ -36,12 +47,12 @@ public class Game {
         return uri;
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> getPlayerList() {
         //OF TODO not possible to add new player to the list
-        return players;
+        return playerList;
     }
 
-    public static GameBuilder builder(){
+    public static GameBuilder builder() {
         return new GameBuilder();
     }
 
@@ -50,69 +61,68 @@ public class Game {
     }
 
     public Player getPlayer(String playerId) {
-        for(Player pl : players)
-        {
-            if(pl.getId().equals(playerId)){
+        for (Player pl : playerList) {
+            if (pl.getId().equals(playerId)) {
                 return pl;
             }
         }
         return null;
     }
 
-    public boolean addPlayer(Player player){
-        return players.add(player);
+    public boolean addPlayer(Player player) {
+        return playerList.add(player);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         GameBuilder g = new GameBuilder();
         return g.toJson(this);
     }
 
-    public Components getComponents(){
+    public Components getComponents() {
         return components;
     }
 
-    public static class GameBuilder{
+    public static class GameBuilder {
         private Game game;
 
-        public GameBuilder(){
+        public GameBuilder() {
             this.game = new Game();
         }
 
-        public GameBuilder withGameid(String gameid){
+        public GameBuilder withGameid(String gameid) {
             this.game.gameid = gameid;
             return this;
         }
 
-        public GameBuilder withUri(String uri){
+        public GameBuilder withUri(String uri) {
             this.game.uri = uri;
             return this;
         }
 
-        public GameBuilder withPlayers(List<Player> players){
-            this.game.players = players;
+        public GameBuilder withPlayers(List<Player> players) {
+            this.game.playerList = players;
             return this;
         }
-        
+
         public GameBuilder withComponents(Components components) {
             this.game.components = components;
             return this;
         }
 
-        public Game buildFromJson(String json){
+        public Game buildFromJson(String json) {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            return gson.fromJson(json,Game.class);
+            return gson.fromJson(json, Game.class);
         }
 
-        public String toJson(Game game){
+        public String toJson(Game game) {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
             return (gson.toJson(game));
         }
 
-        public Game build(){
+        public Game build() {
             return this.game;
         }
     }
