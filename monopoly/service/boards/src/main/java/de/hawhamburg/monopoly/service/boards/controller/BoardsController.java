@@ -75,12 +75,12 @@ public class BoardsController {
 //        return true;
 //    }
 
-    @RequestMapping(value="/boards/{gameId}", method = RequestMethod.DELETE)
+    @RequestMapping(value="/{gameId}", method = RequestMethod.DELETE)
     public boolean deleteGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
         return boardsService.deleteBoard(gameId);
     }
 
-    @RequestMapping(value="/boards/{gameId}/players", method = RequestMethod.GET)
+    @RequestMapping(value="/{gameId}/players", method = RequestMethod.GET)
     public List<Player> getAllPlayers(@PathVariable final String gameId,HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getBoard(gameId).getPlayers();
@@ -90,7 +90,7 @@ public class BoardsController {
         }
     }
 
-    @RequestMapping(value = "/boards/{gameId}/players/{playerId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.PUT)
     public boolean addPlayer(@PathVariable final String gameId, @PathVariable final String playerId,HttpServletRequest request, HttpServletResponse response){
         LOG.info("Got Request to join Gameid "+ gameId + " for playerid "+ playerId);
         try {
@@ -103,7 +103,7 @@ public class BoardsController {
         }
     }
 
-    @RequestMapping(value = "/boards/{gameId}/players/{playerId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.DELETE)
     public boolean removePlayer(@PathVariable final String  gameId, @PathVariable final String  playerId,HttpServletRequest request, HttpServletResponse response){
         try {
             boardsService.removePlayer(gameId,playerId);
@@ -136,7 +136,7 @@ public class BoardsController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/boards/{gameId}/players/{playerId}/roll", method = RequestMethod.POST)
+    @RequestMapping(value = "/{gameId}/players/{playerId}/roll", method = RequestMethod.POST)
     public boolean postRoll(@PathVariable final String gameId, @PathVariable final String playerId, @RequestBody final Rolls roll
             , HttpServletRequest request, HttpServletResponse response){
 
