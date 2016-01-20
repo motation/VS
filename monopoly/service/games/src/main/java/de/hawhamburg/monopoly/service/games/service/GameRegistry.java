@@ -70,11 +70,12 @@ public class GameRegistry {
     }
 
     private void createBrokerForGame(Game game){
-        String borkerUri = game.getComponents().getBroker();
-        borkerUri += "/" + game.getGameid();
+        String brokerUri = game.getComponents().getBroker();
+        brokerUri += "/" + game.getGameid();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<Game> entity = new HttpEntity<>(game,headers);
-        ResponseEntity<String> response = restTemplate.exchange(borkerUri, HttpMethod.PUT,entity,String.class);
+        LOG.info("sending put request to -> " + brokerUri+" with gameid = " +game.getGameid());
+        ResponseEntity<String> response = restTemplate.exchange(brokerUri, HttpMethod.PUT,entity,String.class);
 
         if(response.getStatusCode().equals(HttpStatus.CREATED)){
             initFirstEstates(game,"0");
