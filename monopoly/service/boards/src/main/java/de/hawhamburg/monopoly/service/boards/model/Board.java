@@ -16,6 +16,7 @@ public class Board {
     private final static int PRISON = 3;
     private final Game game;
     private List<Place> places;
+    private String uri;
 
 
     public String getGameId() {
@@ -25,6 +26,7 @@ public class Board {
     public Board(Game game){
         players = new HashMap<>();
         places = new ArrayList<>();
+        uri = game.getComponents().getBoard()+"/"+System.currentTimeMillis();
         this.game = game;
     }
 
@@ -82,5 +84,9 @@ public class Board {
 //        }
 
         return place;
+    }
+
+    public String getUri() {
+        return uri;
     }
 }

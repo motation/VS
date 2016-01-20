@@ -173,6 +173,7 @@ public class BoardsController {
                           @RequestBody final Place place, HttpServletRequest request, HttpServletResponse response){
         LOG.info("Trying to create place: "+ placeId + " for game "+ gameId+ " Place entity "+place.getUri());
         try {
+            place.setId(placeId);
             return boardsService.getBoard(gameId).addPlace(place);
         } catch (EntityDoesNotExistException e) {
             LOG.warn("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());

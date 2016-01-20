@@ -8,7 +8,7 @@ package de.hawhamburg.monopoly.service.boards.model;
 public class Place {
 
     private String name;
-//    private int id;
+    private String id;
     private String uri;
 
     public String getUri() {
@@ -31,13 +31,13 @@ public class Place {
         this.name = name;
     }
 
-//    public int getId() {
-//        return id;
-//    }
+    public String getId() {
+        return id;
+    }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public void setUri(String uri) {
         this.uri = uri;
