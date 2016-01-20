@@ -131,16 +131,21 @@ public class GamesService {
         String encodedBase64Credentials = Base64.getEncoder().encodeToString(credentials.getBytes());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Basic " + encodedBase64Credentials);
-        String gameId = createGame(headers);
-        addPlace(gameId);
-        addPlayer(gameId);
+        Game game = createGame(headers);
+        Place p = addPlace(headers, game);
+        addPlayer(headers, game, p);
     }
 
-    private static String addPlace(String gameId) {
-        return "";
+    private static Place addPlace(HttpHeaders headers,Game game) {
+        String uri = game.getComponents().getBoard()+"/"+game.getGameid()+"/Los";
+        Place p = Place.builder().withName("Los").withUri(uri).build();
+        RestTemplate template = new RestTemplate();
+        HttpEntity entity = new HttpEntity(headers);
+        template.exchange(uri, HttpMethod.PUT,entity,String.class);
+        return p;
     }
 
-    private static String createGame(HttpHeaders headers){
+    private static Game createGame(HttpHeaders headers){
 
         HttpEntity entity = new HttpEntity(Components.getComponents(),headers);
 
@@ -149,20 +154,20 @@ public class GamesService {
 
         ResponseEntity<Game> gameResult = temp.exchange(uriGames, HttpMethod.POST,entity,Game.class);
         System.out.println(gameResult.getBody().toString());
-        return gameResult.getBody().getGameid();
+        return gameResult.getBody();
     }
 
-    private static void addPlayer(String gameId){
+    private static void addPlayer(HttpHeaders headers, Game game, Place place){
 
         String playerId = "Loki";
         String joinGameUri = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games/";
         String uri = "foobar";
-        Place place = Place.builder().withName("Platz").build();
-        joinGameUri += gameId;
+
+        joinGameUri += game.getGameid();
         joinGameUri += "/players/"+playerId;
         joinGameUri += "?name="+playerId;
         joinGameUri += "&uri="+uri;
-        HttpEntity entity = new HttpEntity(new HttpHeaders());
+        HttpEntity entity = new HttpEntity(headers);
         RestTemplate temp = new RestTemplate();
         temp.exchange(joinGameUri, HttpMethod.PUT, entity, String.class);
     }
