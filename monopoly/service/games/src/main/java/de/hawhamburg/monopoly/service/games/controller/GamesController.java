@@ -42,7 +42,7 @@ public class GamesController {
         LOG.info("got a request to post method of createGame");
         Game newGame;
 //        if(comp == null) {
-            newGame = gamesService.createNewGame(services);
+        newGame = gamesService.createNewGame(services);
 //        }else{
 //            newGame = gamesService.createNewGame(comp);
 //        }
@@ -83,12 +83,10 @@ public class GamesController {
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.PUT)
-    public void joinGame(@PathVariable final String gameId, @PathVariable final String playerId, @RequestBody final
-    String params,
+    public void joinGame(@PathVariable final String gameId, @PathVariable final String playerId,
+                         @RequestParam final String name, @RequestParam final String uri,
                          HttpServletRequest request, HttpServletResponse response) throws
             IOException {
-        String name = params.substring(params.indexOf("=") + 1, params.indexOf("&"));
-        String uri = params.substring(params.indexOf("uri") + 4);
         Game game = gamesService.findGame(gameId);
         Player player = gamesService.joinGame(game, playerId, name, uri);
         if (player != null) {
