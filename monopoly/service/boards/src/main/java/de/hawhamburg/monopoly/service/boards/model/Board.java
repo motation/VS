@@ -90,6 +90,10 @@ public class Board {
         return place;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public String getUri() {
         return uri;
     }

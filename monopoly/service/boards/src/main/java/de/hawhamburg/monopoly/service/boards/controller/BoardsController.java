@@ -9,6 +9,7 @@ import de.hawhamburg.monopoly.service.boards.service.BoardsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -163,10 +164,11 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/{gameId}/places/{placeId}")
-    public ResponseEntity<String> getPlace(String gameId, String placeId)
-    {
-        //TODO
-        return "";
+    public String getPlace(@PathVariable final String gameId,@PathVariable final String placeId) throws EntityDoesNotExistException {
+        Game game = boardsService.getBoard(gameId).getGame();
+        String uriToBrokerPlace = game.getComponents().getBroker() + "/" + gameId + "/places/" + placeId;
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(uriToBrokerPlace, HttpStatus.OK);
+        return responseEntity.getBody();
     }
 
     @RequestMapping(value = "/{gameId}/places/{placeId}", method = RequestMethod.PUT)
