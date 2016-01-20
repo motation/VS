@@ -11,6 +11,10 @@ public class Game {
     private String players;
     private Components components;
 
+    public Game() {
+
+    }
+
     public String getGameid() {
         return gameid;
     }
