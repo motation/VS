@@ -70,10 +70,9 @@ public class GamesController {
     }
 
     @RequestMapping(value = "/{gameId}/players", method = RequestMethod.GET)
-    public List<Player> players(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse
+    public List<Player> players(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse
             response) {
-        //OF TODO implement
-        return null;
+        return gamesService.findGame(gameId).getPlayers();
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.GET)

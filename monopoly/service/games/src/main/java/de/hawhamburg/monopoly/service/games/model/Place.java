@@ -6,6 +6,7 @@ package de.hawhamburg.monopoly.service.games.model;
 public class Place {
     private String name;
     private String uri;
+    private String id;
 
     private Place(){
 
@@ -45,5 +46,11 @@ public class Place {
         }
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }
