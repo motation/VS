@@ -61,16 +61,7 @@ public class BoardsController {
         return new ArrayList<Place>();
     }
 
-//    @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
-//    public boolean existsGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
-//        try {
-//            boardsService.getBoard(gameId);
-//        } catch (EntityDoesNotExistException e) {
-//            response.setStatus(HttpServletResponse.SC_CONFLICT);
-//            return false;
-//        }
-//        return true;
-//    }
+
 
     @RequestMapping(value="/{gameId}", method = RequestMethod.DELETE)
     public boolean deleteGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
