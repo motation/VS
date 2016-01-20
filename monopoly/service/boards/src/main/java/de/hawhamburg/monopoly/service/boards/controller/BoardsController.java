@@ -166,7 +166,7 @@ public class BoardsController {
     public ResponseEntity<String> getPlace(String gameId, String placeId)
     {
         //TODO
-        return "";
+        return null;
     }
 
     @RequestMapping(value = "/{gameId}/places/{placeId}", method = RequestMethod.PUT)

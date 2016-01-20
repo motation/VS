@@ -9,6 +9,9 @@ import de.hawhamburg.monopoly.service.player.service.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -70,6 +73,12 @@ public class PlayerController {
         ResponseEntity<String> place2Resp = template.getForEntity(placeUri, String.class);
         jsonObject = gson.fromJson( json, JsonObject.class);
         String brokerUri =  jsonObject.get("broker").getAsString();
+        ResponseEntity<Estate> estateResponseEntity = template.getForEntity(brokerUri, Estate.class);
+        ResponseEntity<Event[]> kaufenResp = template.postForEntity(brokerUri+"/owner", player,Event[].class);
+        template.exchange(player.getUri()+"/ready", HttpMethod.PUT,new HttpEntity(new HttpHeaders()), String.class);
+
+
+
 
     }
 
