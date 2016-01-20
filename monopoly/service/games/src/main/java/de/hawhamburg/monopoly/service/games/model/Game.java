@@ -65,6 +65,12 @@ public class Game {
         return players.add(player);
     }
 
+    @Override
+    public String toString(){
+        GameBuilder g = new GameBuilder();
+        return g.toJson(this);
+    }
+
     public Components getComponents(){
         return components;
     }

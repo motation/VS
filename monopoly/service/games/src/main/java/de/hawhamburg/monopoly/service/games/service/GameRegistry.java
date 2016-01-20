@@ -22,9 +22,8 @@ public class GameRegistry {
     }
 
     public Game addGame(Components components) {
-        UUID uuid = UUID.randomUUID();
         Game game = Game.builder()
-                .withGameid(uuid.toString())
+                .withGameid(System.currentTimeMillis()+"")
                 .withUri("")
                 .withComponents(components)
                 .build();
