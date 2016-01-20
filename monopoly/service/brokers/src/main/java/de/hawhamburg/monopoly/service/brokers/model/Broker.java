@@ -18,6 +18,8 @@ public class Broker {
     public Broker() {
         estates = new HashMap<>();
         owners = new HashMap<>();
+        //OF TODO initalize start config...
+
     }
 
     public Map<Integer, Estate> getEstates() {

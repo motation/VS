@@ -9,6 +9,11 @@ public class Place {
 
     private String name;
     private int id;
+    private String uri;
+
+    public String getUri() {
+        return uri;
+    }
 
     public Place(String name){
         this.name = name;
@@ -30,6 +35,10 @@ public class Place {
         this.id = id;
     }
 
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,12 +46,15 @@ public class Place {
 
         Place place = (Place) o;
 
-        return name.equals(place.name);
+        if (name != null ? !name.equals(place.name) : place.name != null) return false;
+        return !(uri != null ? !uri.equals(place.uri) : place.uri != null);
 
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (uri != null ? uri.hashCode() : 0);
+        return result;
     }
 }

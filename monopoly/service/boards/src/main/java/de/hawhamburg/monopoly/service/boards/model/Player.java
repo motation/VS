@@ -10,10 +10,19 @@ public class Player {
     private String id;
     private Place place;
     private int position;
+    private String uri;
 
     public Player(String playerId) {
         id = playerId;
         position = 0;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getId() {
