@@ -186,7 +186,9 @@ public class BoardsController {
      @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
     public Board createBoard(@PathVariable final String gameId, @RequestBody Game game, HttpServletRequest request, HttpServletResponse response){
          LOG.info("TRying to create Board for Game: "+gameId);
-         return boardsService.createNewBoard(game);
+         Board b = boardsService.createNewBoard(game);
+         LOG.info("Board created");
+         return b;
      }
 
 
