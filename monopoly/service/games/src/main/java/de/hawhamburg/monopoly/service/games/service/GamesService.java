@@ -11,10 +11,7 @@ import de.hawhamburg.monopoly.util.ServiceNames;
 import de.hawhamburg.services.service.ServicesService;
 import de.hawhamburg.services.service.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -116,7 +113,9 @@ public class GamesService {
      */
     public boolean addPlayerToBoard(Game game, Player player){
         String uri = game.getComponents().getBoard()+ "/" + game.getGameid() + "/players/"+player.getId();
-        restTemplate.put(uri, player);
+        HttpEntity entity = new HttpEntity(new HttpHeaders());
+        restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
+
         return true;
     }
 
@@ -133,6 +132,14 @@ public class GamesService {
 
         ResponseEntity<Game> gameResult = temp.exchange(uriGames, HttpMethod.POST,entity,Game.class);
         System.out.println(gameResult.getBody().toString());
+        String playerId = "Loki";
+        String joinGameUri = "https://vs-docker.informatik.haw-hamburg.de/ports/16310/games/";
+        joinGameUri += gameResult.getBody().getGameid();
+        joinGameUri += "/players/"+playerId;
+        joinGameUri += "?name="+playerId;
+        joinGameUri += "&uri=foobar";
+        entity = new HttpEntity(headers);
+        temp.exchange(joinGameUri, HttpMethod.PUT, entity, String.class);
     }
 
 }

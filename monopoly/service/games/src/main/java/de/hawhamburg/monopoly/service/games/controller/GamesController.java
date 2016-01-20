@@ -88,7 +88,10 @@ public class GamesController {
                          HttpServletRequest request, HttpServletResponse response) throws
             IOException {
         Game game = gamesService.findGame(gameId);
+        LOG.info("Player with id %s trying to join game with id %s", playerId, gameId);
+        LOG.info("Player name: %s with uri: %s ", name, uri);
         Player player = gamesService.joinGame(game, playerId, name, uri);
+        LOG.info("Player joined");
         if (player != null) {
             gamesService.addPlayerToBoard(game, player);
             response.setStatus(HttpServletResponse.SC_OK);
