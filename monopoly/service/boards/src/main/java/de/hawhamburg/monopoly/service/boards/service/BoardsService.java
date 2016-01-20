@@ -29,6 +29,10 @@ public class BoardsService {
 
     }
 
+    public Player addPlayer(String gameId, String playerId) throws EntityDoesNotExistException {
+        return registry.getBoard(gameId).getPlayer(playerId);
+    }
+
     public int movePlayer(String gameId, String playerId, Roll roll) throws InvalidRollException, PlayerNotReadyException, IOException, EntityDoesNotExistException {
             return registry.getBoard(gameId).moveByRoll(playerId, roll.getNumber());
 

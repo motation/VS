@@ -43,22 +43,13 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/{gameId}", method = RequestMethod.GET)
-    public List<Place> getAllPlaces(){
-        //TODO
-        /*
-        {
-  "fields":[
-    {"place": "/boards/42/places/0" ,"players":[]},
-    {"place": "/boards/42/places/1" ,"players":[]},
-    {"place": "/boards/42/places/2" ,"players":[]},
-    {"place": "/boards/42/places/3" ,"players":[]},
-    {"place":{"name":"Einkommensteuer"},"players":[{"id":"Mario","place":"/boards/42/places/2", "position":4}]}
-  ],
-  "positions": { "Mario":4 }
-}
-
-         */
-        return new ArrayList<Place>();
+    public List<Place> getAllPlaces(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
+        try {
+            return boardsService.getBoard(gameId).getPlaces();
+        } catch (EntityDoesNotExistException e) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            return new ArrayList<>();
+        }
     }
 
 
@@ -88,7 +79,8 @@ public class BoardsController {
     public boolean addPlayer(@PathVariable final String gameId, @PathVariable final String playerId,HttpServletRequest request, HttpServletResponse response){
         LOG.info("Got Request to join Gameid "+ gameId + " for playerid "+ playerId);
         try {
-            boardsService.getPlayerPosition(gameId, playerId);
+            Player player = boardsService.addPlayer(gameId, playerId);
+            response.setHeader("Location",player.getUri());
             return true;
         } catch (EntityDoesNotExistException e) {
             LOG.error("Board with id: "+gameId+"does not Exists");
@@ -174,6 +166,7 @@ public class BoardsController {
         LOG.info("Trying to create place: "+ placeId + " for game "+ gameId+ " Place entity "+place.getUri());
         try {
             place.setId(placeId);
+            response.setHeader("Location",place.getUri());
             return boardsService.getBoard(gameId).addPlace(place);
         } catch (EntityDoesNotExistException e) {
             LOG.warn("Game with GameId "+gameId+ " does not exsist, but was requested in "+ request.getPathInfo());
@@ -187,6 +180,8 @@ public class BoardsController {
          LOG.info("TRying to create Board for Game: "+gameId);
          Board board = boardsService.createNewBoard(game);
          LOG.info("Board created");
+         response.setHeader("Location",board.getUri());
+
          return board;
      }
 

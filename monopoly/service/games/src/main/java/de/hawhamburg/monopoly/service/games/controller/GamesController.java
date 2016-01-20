@@ -57,16 +57,17 @@ public class GamesController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Games games(HttpServletRequest request, HttpServletResponse response) {
+    public Games getGames(HttpServletRequest request, HttpServletResponse response) {
         return Games.builder()
                 .withGames(gamesService.getGames())
                 .build();
     }
 
     @RequestMapping(value = "/{gameId}", method = RequestMethod.GET)
-    public Game game(@PathVariable final int gameId, HttpServletRequest request, HttpServletResponse response) {
-        //OF TODO implement
-        return null;
+    public Game getGame(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response) {
+        Game game = gamesService.findGame(gameId);
+        response.setHeader("Location",game.getUri());
+        return game;
     }
 
     @RequestMapping(value = "/{gameId}/players", method = RequestMethod.GET)
@@ -76,10 +77,9 @@ public class GamesController {
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.GET)
-    public Player getPlayer(@PathVariable final int gameId, @PathVariable final int playerId, HttpServletRequest
+    public Player getPlayer(@PathVariable final String gameId, @PathVariable final String playerId, HttpServletRequest
             request, HttpServletResponse response) {
-        //OF TODO implement
-        return null;
+        return gamesService.findGame(gameId).getPlayer(playerId);
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.PUT)
