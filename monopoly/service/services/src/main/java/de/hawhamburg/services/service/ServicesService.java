@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.util.RelaxedSSLValidation;
 import de.hawhamburg.services.entity.Services;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,7 +27,7 @@ public class ServicesService {
     private static final String URI_FOR_NAME_OF_SERVICE = URI_TO_DISCOVERY_SERVICE + "/of/name";
     private static final String USER_PASS_CRED = UserCredentials.getCredentials();
 
-//    private static final Logger LOG = LoggerFactory.getLogger(ServicesService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ServicesService.class);
 
     public String registerService(de.hawhamburg.services.entity.Service service) {
         RelaxedSSLValidation.useRelaxedSSLValidation();
@@ -37,10 +39,10 @@ public class ServicesService {
         HttpEntity<de.hawhamburg.services.entity.Service> request = new HttpEntity<>(service, headers);
         ResponseEntity<String> response = null;
         try {
-//            LOG.info("trying to register the service: " + service.getName());
+            LOG.info("trying to register the service: " + service.getName());
             response = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
         } catch (RestClientException e) {
-//            LOG.warn("Registration failed with: " + e.getMessage());
+            LOG.warn("Registration failed with: " + e.getMessage());
             return null;
         }
         return response.getBody();
@@ -56,11 +58,11 @@ public class ServicesService {
         HttpEntity<String> request = new HttpEntity<>(headers);
         ResponseEntity<Services> response = null;
         try {
-//            LOG.info("request to : " + uri);
-//            LOG.info("trying to fetch service id by name: " + nameOfService);
+            LOG.info("request to : " + uri);
+            LOG.info("trying to fetch service id by name: " + nameOfService);
             response = restTemplate.exchange(uri, HttpMethod.GET, request, Services.class);
         } catch (RestClientException e) {
-//            LOG.warn("fetching service id by name failed with: " + e.getMessage());
+            LOG.warn("fetching service id by name failed with: " + e.getMessage());
             return null;
         }
         //OF TODO will be removed later
@@ -79,11 +81,11 @@ public class ServicesService {
         HttpEntity<String> request = new HttpEntity<>(headers);
         ResponseEntity<String> response = null;
         try {
-//            LOG.info("request to : " + uri);
-//            LOG.info("trying to fetch service by name: " + nameOfService);
+            LOG.info("request to : " + uri);
+            LOG.info("trying to fetch service by name: " + nameOfService);
             response = restTemplate.exchange(uri, HttpMethod.GET, request, String.class);
         } catch (RestClientException e) {
-//            LOG.warn("fetching service by name failed with: " + e.getMessage());
+            LOG.warn("fetching service by name failed with: " + e.getMessage());
             return null;
         }
         String json = response.getBody();
