@@ -10,6 +10,8 @@ import de.hawhamburg.monopoly.util.Requester;
 import de.hawhamburg.monopoly.util.ServiceNames;
 import de.hawhamburg.services.service.ServicesService;
 import de.hawhamburg.services.service.UserCredentials;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,8 @@ public class GamesService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    private static final Logger LOG = LoggerFactory.getLogger(GamesService.class);
 
     public Game createNewGame(ServicesService services){
 //        de.hawhamburg.services.entity.Service sba = services.getServiceByName(ServiceNames.NAME_OF_BANKS_SERVICE);
@@ -114,6 +118,7 @@ public class GamesService {
     public boolean addPlayerToBoard(Game game, Player player){
         String uri = game.getComponents().getBoard()+ "/" + game.getGameid() + "/players/"+player.getId();
         HttpEntity entity = new HttpEntity(new HttpHeaders());
+        LOG.info("Sending to Uri: "+ uri);
         restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
 
         return true;
