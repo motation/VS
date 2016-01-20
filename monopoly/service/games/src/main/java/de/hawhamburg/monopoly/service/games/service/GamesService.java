@@ -137,11 +137,12 @@ public class GamesService {
     }
 
     private static Place addPlace(HttpHeaders headers,Game game) {
-        String uri = game.getComponents().getBoard()+"/"+game.getGameid()+"/Los";
+        String uri = game.getComponents().getBoard()+"/"+game.getGameid()+"/places/Los";
         Place p = Place.builder().withName("Los").withUri(uri).build();
         RestTemplate template = new RestTemplate();
         HttpEntity entity = new HttpEntity(headers);
         template.exchange(uri, HttpMethod.PUT,entity,String.class);
+        System.out.println("PLace created");
         return p;
     }
 
@@ -170,5 +171,6 @@ public class GamesService {
         HttpEntity entity = new HttpEntity(headers);
         RestTemplate temp = new RestTemplate();
         temp.exchange(joinGameUri, HttpMethod.PUT, entity, String.class);
+        System.out.println("Player added");
     }
 }

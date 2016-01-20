@@ -171,7 +171,7 @@ public class BoardsController {
         }
     }
 
-    @RequestMapping(value = "/games/{gameId}/places/{placeId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{gameId}/places/{placeId}", method = RequestMethod.PUT)
     public Place addPlace(@PathVariable final String gameId, @PathVariable final String placeId, @RequestBody final Place place, HttpServletRequest request, HttpServletResponse response){
         try {
             return boardsService.getBoard(gameId).addPlace(place);
@@ -185,6 +185,7 @@ public class BoardsController {
 
      @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
     public Board createBoard(@PathVariable final String gameId, @RequestBody Game game, HttpServletRequest request, HttpServletResponse response){
+         LOG.info("TRying to create Board for Game: "+gameId);
          return boardsService.createNewBoard(game);
      }
 
