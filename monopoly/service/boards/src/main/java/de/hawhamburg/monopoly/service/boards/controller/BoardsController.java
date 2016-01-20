@@ -163,7 +163,8 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/{gameId}/places/{placeId}", method = RequestMethod.PUT)
-    public Place addPlace(@PathVariable final String gameId, @PathVariable final String placeId, @RequestBody final Place place, HttpServletRequest request, HttpServletResponse response){
+    public Place addPlace(@PathVariable final String gameId, @PathVariable final String placeId,
+                          @RequestBody final Place place, HttpServletRequest request, HttpServletResponse response){
         LOG.info("Trying to create place: "+ placeId + " for game "+ gameId+ " Place entity "+place.getUri());
         try {
             return boardsService.getBoard(gameId).addPlace(place);

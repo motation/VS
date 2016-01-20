@@ -15,6 +15,10 @@ public class Place {
         return uri;
     }
 
+    public Place(){
+
+    }
+
     public Place(String name){
         this.name = name;
     }

@@ -10,7 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -30,27 +29,27 @@ public class BoardsServiceApplication {
 
 //    @PostConstruct
     public void registerToDiscoveryService() {
-//        de.hawhamburg.services.entity.Service service =
-//                new de.hawhamburg.services.entity.Service("This is a boards service by LO", ServiceNames.NAME_OF_BOARDS_SERVICE,
-//                        "Boards Service Deluxe by LO", "https://vs-docker.informatik.haw-hamburg.de/ports/16311/boards");
-//
-//        InetAddress ip;
-//        try {
-//            ip = InetAddress.getLocalHost();
-//            LOG.info("Current IP address : " + ip.getHostAddress());
-//            String urlOfService = ip.getHostAddress() + ":" + port;
-//            service.setUri("http://" + urlOfService + "/boards");
-//        } catch (UnknownHostException e) {
-//            LOG.info("error getting ip adress!");
-//            e.printStackTrace();
-//        }
-//
-//        String result = servicesService.registerService(service);
-//        if (result == null) {
-//            LOG.warn("registration not successful!");
-//        } else {
-//            LOG.info("registration successful!");
-//        }
+        de.hawhamburg.services.entity.Service service =
+                new de.hawhamburg.services.entity.Service("This is a boards service by LO", ServiceNames.NAME_OF_BOARDS_SERVICE,
+                        "Boards Service Deluxe by LO", "https://vs-docker.informatik.haw-hamburg.de/ports/16311/boards");
+
+        InetAddress ip;
+        try {
+            ip = InetAddress.getLocalHost();
+            LOG.info("Current IP address : " + ip.getHostAddress());
+            String urlOfService = ip.getHostAddress() + ":" + port;
+            service.setUri("http://" + urlOfService + "/boards");
+        } catch (UnknownHostException e) {
+            LOG.info("error getting ip adress!");
+            e.printStackTrace();
+        }
+
+        String result = servicesService.registerService(service);
+        if (result == null) {
+            LOG.warn("registration not successful!");
+        } else {
+            LOG.info("registration successful!");
+        }
     }
 
 
