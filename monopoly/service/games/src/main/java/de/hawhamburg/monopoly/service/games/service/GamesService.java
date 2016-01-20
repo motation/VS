@@ -137,7 +137,7 @@ public class GamesService {
     }
 
     private static String addPlace(String gameId) {
-
+        return "";
     }
 
     private static String createGame(HttpHeaders headers){
@@ -149,6 +149,7 @@ public class GamesService {
 
         ResponseEntity<Game> gameResult = temp.exchange(uriGames, HttpMethod.POST,entity,Game.class);
         System.out.println(gameResult.getBody().toString());
+        return gameResult.getBody().getGameid();
     }
 
     private static void addPlayer(String gameId){
