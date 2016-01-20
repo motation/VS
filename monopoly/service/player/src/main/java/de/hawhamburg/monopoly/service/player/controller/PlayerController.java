@@ -36,9 +36,9 @@ public class PlayerController {
     @RequestMapping(method = RequestMethod.POST)
     public Player createPlayer(@RequestBody final Player player,HttpServletRequest request, HttpServletResponse
             response){
-
         if(playerService.createPlayer(player)){
             response.setStatus(HttpServletResponse.SC_CREATED);
+            response.setHeader("Location",player.getUri());
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
@@ -49,7 +49,7 @@ public class PlayerController {
     public void notifyPlayerTurn(HttpServletRequest request, HttpServletResponse
             response){
         Player player = playerService.getPlayer();
-        System.out.println("Your Turn!");
+        LOG.info("Your Turn!");
         LOG.info("Player "+player.getName()+" was received, a Turn event.");
         //TODO Zug anzeigen
 
@@ -59,7 +59,7 @@ public class PlayerController {
     public void notifyPlayerEvent(@RequestBody final Event[] events, HttpServletRequest request, HttpServletResponse
             response){
         for(Event e : events) {
-            System.out.println(e.getName());
+            LOG.info(e.getName());
         }
     }
 
