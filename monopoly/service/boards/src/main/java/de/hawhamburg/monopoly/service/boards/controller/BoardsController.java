@@ -92,10 +92,12 @@ public class BoardsController {
 
     @RequestMapping(value = "/boards/{gameId}/players/{playerId}", method = RequestMethod.PUT)
     public boolean addPlayer(@PathVariable final String gameId, @PathVariable final String playerId,HttpServletRequest request, HttpServletResponse response){
+        LOG.info("Got Request to join Gameid "+ gameId + " for playerid "+ playerId);
         try {
             boardsService.getPlayerPosition(gameId, playerId);
             return true;
         } catch (EntityDoesNotExistException e) {
+            LOG.error("Board with id: "+gameId+"does not Exists");
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             return false;
         }
