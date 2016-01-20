@@ -40,7 +40,7 @@ public class BoardsController {
     private static final Logger LOG = LoggerFactory.getLogger(BoardsController.class);
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Board> getAllBoards(HttpServletRequest request, HttpServletResponse response){
         return boardsService.getBoards();
     }
