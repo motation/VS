@@ -6,9 +6,7 @@ import com.google.gson.GsonBuilder;
 import de.hawhamburg.monopoly.util.Components;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Ole on 15.11.2015.
@@ -17,7 +15,7 @@ public class Game {
 
     private String gameid;
     private String uri;
-    private List<Player> players;
+    private List<Player> playerList;
 //    private Map<String, Player> playersMap;
     private Components components;
     @JsonIgnore
@@ -27,7 +25,11 @@ public class Game {
 
     private Game(){
         this.components = Components.getComponents();
-        players = new ArrayList<>();
+        playerList = new ArrayList<>();
+    }
+
+    public String getPlayers(){
+        return components.getGame()+"/"+gameid+"/players";
     }
 
     public String getGameid() {
@@ -38,9 +40,10 @@ public class Game {
         return uri;
     }
 
-    public List<Player> getPlayers() {
+    @JsonIgnore
+    public List<Player> getPlayerList() {
         //OF TODO not possible to add new player to the list
-        return players;
+        return playerList;
     }
 
     public static GameBuilder builder(){
@@ -52,7 +55,7 @@ public class Game {
     }
 
     public Player getPlayer(String playerId) {
-        for(Player pl : players)
+        for(Player pl : playerList)
         {
             if(pl.getId().equals(playerId)){
                 return pl;
@@ -62,7 +65,7 @@ public class Game {
     }
 
     public boolean addPlayer(Player player){
-        return players.add(player);
+        return playerList.add(player);
     }
 
     @Override
@@ -93,7 +96,7 @@ public class Game {
         }
 
         public GameBuilder withPlayers(List<Player> players){
-            this.game.players = players;
+            this.game.playerList = players;
             return this;
         }
         

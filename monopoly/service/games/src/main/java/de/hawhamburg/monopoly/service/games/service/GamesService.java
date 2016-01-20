@@ -63,7 +63,7 @@ public class GamesService {
         if(game == null) return null;
         Player player = Player.builder().withId(playerId).withName(name).withUri(uri).build();
         if(playerId.equals(player.getId()) && player.getName().equals(name)){
-            player.setTurnOrder(game.getPlayers().size());
+            player.setTurnOrder(game.getPlayerList().size());
             game.addPlayer(player);
             return player;
         }
@@ -80,7 +80,7 @@ public class GamesService {
     }
 
     public Player findPlayerByTurnOrder(Game game, int turnOrder){
-        List<Player> players = game.getPlayers();
+        List<Player> players = game.getPlayerList();
         for(Player player : players){
             if(player.getTurnOrder()== turnOrder){
                 return player;
@@ -95,7 +95,7 @@ public class GamesService {
         int order = game.getActiveTurnOrder();
         Player tryingPlayer = findPlayerByTurnOrder(game, game.getActiveTurnOrder());
         tryingPlayer.setReady(false);
-        game.setActiveTurnOrder((order+1)%game.getPlayers().size());
+        game.setActiveTurnOrder((order+1)%game.getPlayerList().size());
         return 0;
     }
 
@@ -139,6 +139,7 @@ public class GamesService {
         String uri = "https://vs-docker.informatik.haw-hamburg.de/ports/11801/boards/"+game.getGameid()+"/places/Los";
 //        String uri = "http://127.0.0.1:4567/boards/"+game.getGameid()+"/places/123";
         Place p = Place.builder().withName("Los").withUri(uri).build();
+        p.setId("0");
         RestTemplate template = new RestTemplate();
         HttpEntity<Place> entity = new HttpEntity(p,headers);
         System.out.println("Send to "+ uri);
@@ -169,7 +170,9 @@ public class GamesService {
         joinGameUri += "/players/"+playerId;
         joinGameUri += "?name="+playerId;
         joinGameUri += "&uri="+uri;
-        HttpEntity entity = new HttpEntity(headers);
+        Player player = Player.builder().withUri(uri).withName(playerId).withId(playerId)
+                /*.withPosition(0).withPlace(place)*/.build();
+        HttpEntity<Player> entity = new HttpEntity(player,headers);
         RestTemplate temp = new RestTemplate();
         System.out.println(joinGameUri);
         temp.exchange(joinGameUri, HttpMethod.PUT, entity, String.class);

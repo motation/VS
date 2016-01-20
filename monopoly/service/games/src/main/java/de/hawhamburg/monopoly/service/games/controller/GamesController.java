@@ -72,7 +72,7 @@ public class GamesController {
     @RequestMapping(value = "/{gameId}/players", method = RequestMethod.GET)
     public List<Player> players(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse
             response) {
-        return gamesService.findGame(gameId).getPlayers();
+        return gamesService.findGame(gameId).getPlayerList();
     }
 
     @RequestMapping(value = "/{gameId}/players/{playerId}", method = RequestMethod.GET)
