@@ -51,6 +51,7 @@ public class GamesController {
         } else {
             gamesService.createBoard(newGame);
             response.setStatus(HttpServletResponse.SC_CREATED);
+            response.setHeader("Location",newGame.getUri());
         }
         return newGame;
     }
@@ -95,6 +96,7 @@ public class GamesController {
         if (player != null) {
             gamesService.addPlayerToBoard(game, player);
             response.setStatus(HttpServletResponse.SC_OK);
+            response.setHeader("Location",player.getUri());
         } else {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
         }

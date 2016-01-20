@@ -45,7 +45,7 @@ public class BrokerService {
         return (brokers.put(gameid, new Broker()) == null);
     }
 
-    private Broker getBroker(String gameid) {
+    public Broker getBroker(String gameid) {
         return brokers.get(gameid);
     }
 
