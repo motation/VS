@@ -3,9 +3,7 @@ package de.hawhamburg.monopoly.service.boards.controller;
 import de.hawhamburg.monopoly.service.boards.exception.EntityDoesNotExistException;
 import de.hawhamburg.monopoly.service.boards.exception.InvalidRollException;
 import de.hawhamburg.monopoly.service.boards.exception.PlayerNotReadyException;
-import de.hawhamburg.monopoly.service.boards.model.Board;
-import de.hawhamburg.monopoly.service.boards.model.Place;
-import de.hawhamburg.monopoly.service.boards.model.Player;
+import de.hawhamburg.monopoly.service.boards.model.*;
 import de.hawhamburg.monopoly.service.boards.model.wrapper.Rolls;
 import de.hawhamburg.monopoly.service.boards.service.BoardsService;
 import org.slf4j.Logger;
@@ -19,7 +17,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import de.hawhamburg.monopoly.service.boards.model.Roll;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -187,8 +184,8 @@ public class BoardsController {
     }
 
      @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
-    public Board createBoard(@PathVariable final String gameId, HttpServletRequest request, HttpServletResponse response){
-         return boardsService.createNewBoard(gameId);
+    public Board createBoard(@PathVariable final String gameId, @RequestBody Game game, HttpServletRequest request, HttpServletResponse response){
+         return boardsService.createNewBoard(game);
      }
 
 
